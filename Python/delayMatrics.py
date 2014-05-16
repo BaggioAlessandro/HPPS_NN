@@ -116,8 +116,6 @@ for i in range(0,N_NEURONS):
         delay_n[i][j] = [delay[i][j][p]/sum[i][j] for p in range(N_CAMP)]
 
 
-
-
 np.save("HPPS_dataPrep.npy", delay)
 np.save("HPPS_dataPrep.npy", delay_n)
 np.save("HPPS_dataPrep.npy", compress())    #save d1        
