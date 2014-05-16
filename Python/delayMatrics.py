@@ -28,8 +28,8 @@ def from_data_to_spike(i):
     return qi
 
 def my_subctract(my_list, item):
-    q = np.empty ((my_list.shape), dtype=int)
-    q2 = np.empty ((my_list.shape), dtype=int)
+    q = np.empty ((my_list.shape), dtype = int)
+    q2 = np.empty ((my_list.shape), dtype = int)
     index = 0
     #if q2.size == 0:
     #    return q2
