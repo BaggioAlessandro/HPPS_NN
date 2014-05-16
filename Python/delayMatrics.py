@@ -85,6 +85,16 @@ def compress():
             d1[:][:][i]= d1[:][:][i] + delay_n[:][:][j]
     
     return d1
+    
+def mySave (my_matrix):
+    file = open("Hystogram.txt", "w")
+    for i in range(0,5):
+        for j in range(0,5):
+          file.write("coppia " + str(i) + " " + str(j) + "\n")
+          for k in range(0, 5):
+                file.write(str(my_matrix[i][j][k]) + " ")
+          file.write("\n")  
+    file.close
 
 #genero random data
 gen_rand_data()
@@ -114,12 +124,21 @@ sum = np.sum(delay, 2)
 for i in range(0,N_NEURONS):
     for j in range(0,N_NEURONS):
         delay_n[i][j] = [delay[i][j][p]/sum[i][j] for p in range(N_CAMP)]
-
-
-np.save("HPPS_dataPrep.npy", delay)
-np.save("HPPS_dataPrep.npy", delay_n)
-np.save("HPPS_dataPrep.npy", compress())    #save d1        
         
-print("fine")
+
+d1 = compress()
+d1_100 = d1[:][:][0:100]
+d1_100 = np.empty((N_NEURONS,N_NEURONS,100))
+sum2 = np.sum(d1_100, 2)
+for i in range(0,N_NEURONS):
+    for j in range(0,N_NEURONS):
+        d1_100n[i][j] = [d1_100[i][j][p]/sum2[i][j] for p in range(100)]
+
+
+np.savez("HPPS_dataPrep.npy", delay = delay, delay_n = delay_n, d1 = d1, d1_100n = d1_100n )   #save also d1        
+        
+
+
+("fine")
 
     
