@@ -83,6 +83,8 @@ def compress():
         i = i+1
         for j in range(np.int64(np.floor(N_CAMP/factor))*factor, N_CAMP):
             d1[:][:][i]= d1[:][:][i] + delay_n[:][:][j]
+    
+    return d1
 
 #genero random data
 gen_rand_data()
@@ -113,8 +115,12 @@ for i in range(0,N_NEURONS):
     for j in range(0,N_NEURONS):
         delay_n[i][j] = [delay[i][j][p]/sum[i][j] for p in range(N_CAMP)]
 
-compress()
-        
+
+
+
+np.save("HPPS_dataPrep.npy", delay)
+np.save("HPPS_dataPrep.npy", delay_n)
+np.save("HPPS_dataPrep.npy", compress())    #save d1        
         
 print("fine")
 
