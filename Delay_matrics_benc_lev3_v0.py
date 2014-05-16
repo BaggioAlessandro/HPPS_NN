@@ -65,9 +65,7 @@ def hist1(my_list):
             index1 += 1
     return hist
     
-def hist2(my_list):
-    hist = np.where(my_list > 0)
-    return hist[0]
+
 
 #genero random data
 gen_rand_data()
