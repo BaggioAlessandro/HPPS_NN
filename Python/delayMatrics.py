@@ -128,12 +128,12 @@ for i in range(0,N_NEURONS):
 
 d1 = compress()
 d1_100 = d1[:][:][0:100]
-d1_100 = np.empty((N_NEURONS,N_NEURONS,100))
+d1_100n = np.zeros((N_NEURONS,N_NEURONS,100))
 sum2 = np.sum(d1_100, 2)
 for i in range(0,N_NEURONS):
     for j in range(0,N_NEURONS):
-        d1_100n[i][j] = [d1_100[i][j][p]/sum2[i][j] for p in range(100)]
-
+        for p in range(0, (d1_100.shape)[2]):
+            d1_100n[i][j][p] = d1_100[i][j][p]/sum2[i][j]
 
 np.savez("HPPS_dataPrep.npy", delay = delay, delay_n = delay_n, d1 = d1, d1_100n = d1_100n )   #save also d1        
         
