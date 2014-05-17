@@ -8,7 +8,7 @@ N_NEURONS = 5
 N_CAMP = 400
 
 path = os.getcwd()
-path = path + "\Documents\GitHub\HPPS_NN\"
+path = path + "/Documents/GitHub/HPPS_NN/"
 #data= np.random.random_integers(0,1,(N_NEURONS,N_CAMP))
 data= np.loadtxt(path + "HPPS_inputData.txt", dtype=int)
 #gen_rand_data()
@@ -95,7 +95,7 @@ def compress():
     return d1
     
 def mySave (my_matrix):
-    file = open("Hystogram.txt", "w")
+    file = open(path+"Hystogram.txt", "w")
     for i in range(0,5):
         for j in range(0,5):
           file.write("coppia " + str(i+1) + " " + str(j+1) + "\n")
