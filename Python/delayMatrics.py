@@ -123,7 +123,6 @@ for i in range(0,N_NEURONS):
         
         for h in range(0,vi.size):
             q2 = my_subctract_v3(vj, vi[h])
-            print(q2)
             if q2.size>0:
                 my_hist = hist2(q2)
                 for p in range(0, my_hist.size):
