@@ -1,5 +1,5 @@
 numb_neurons = 5;
-numb_camp = 400;
+numb_camp = 5000;
 
 s=randi(2,numb_neurons,numb_neurons);
 path = pwd

@@ -5,16 +5,16 @@ import os
 
 N_NEURONS = 5
 
-N_CAMP = 20
+N_CAMP = 5000
 
 path = os.getcwd()
 path = path + "/Documents/GitHub/HPPS_NN/"
-#data= np.random.random_integers(0,1,(N_NEURONS,N_CAMP))
-data= np.loadtxt(path + "HPPS_inputData2.txt", dtype=int)
+#data= np.random.random_integers(0,20,(N_NEURONS,N_CAMP))
+data= np.loadtxt(path + "HPPS_inputData.txt", dtype=int)
 #gen_rand_data()
 #np.savetxt(path + "HPPS_inputData.txt", data, fmt = '%01d')
 
-delay= np.zeros ((N_NEURONS,N_NEURONS,N_CAMP))
+delay= np.zeros ((N_NEURONS,N_NEURONS,N_CAMP), dtype=int)
 
 delay_n= np.zeros ((N_NEURONS,N_NEURONS,N_CAMP))
 
@@ -142,7 +142,7 @@ d1_100n = np.zeros((N_NEURONS,N_NEURONS,100))
 sum2 = np.sum(d1_100, 2)
 for i in range(0,N_NEURONS):
     for j in range(0,N_NEURONS):
-        for p in range(0, (d1_100.shape)[2]):
+        for p in range(0, 100):
             d1_100n[i][j][p] = d1_100[i][j][p]/sum2[i][j]
             
 mySave(delay)
