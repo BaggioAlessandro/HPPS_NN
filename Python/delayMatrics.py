@@ -4,11 +4,12 @@ import numpy as np
 
 N_NEURONS = 5
 
-N_CAMP = 50
+N_CAMP = 400
 
-data= np.random.random_integers(0,5,(N_NEURONS,N_CAMP))
-#data= np.loadtxt("HPPS_inputData.txt", dtype=int)
-#np.savetxt("HPPS_inputData.txt", data)
+#data= np.random.random_integers(0,1,(N_NEURONS,N_CAMP))
+data= np.loadtxt("HPPS_inputData.txt", dtype=int)
+#gen_rand_data()
+#np.savetxt("HPPS_inputData.txt", data, fmt = '%01d')
 
 print(data)
 
@@ -94,9 +95,9 @@ def mySave (my_matrix):
     file = open("Hystogram.txt", "w")
     for i in range(0,5):
         for j in range(0,5):
-          file.write("coppia " + str(i) + " " + str(j) + "\n")
+          file.write("coppia " + str(j+1) + " " + str(i+1) + "\n")
           for k in range(0, 5):
-                file.write(str(my_matrix[i][j][k]) + " ")
+                file.write(str(my_matrix[j][i][k]) + " ")
           file.write("\n")  
     file.close
 

@@ -13,6 +13,7 @@ s1 = fscanf(f2, str ,[numb_camp numb_neurons]);
 s1 = s1';
 s = s1;
 fclose(f2);
+%s1 = s;
 
 for i=1:numb_neurons
     for j=1:numb_neurons

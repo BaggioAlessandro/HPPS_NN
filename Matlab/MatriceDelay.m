@@ -1,10 +1,10 @@
 numb_neurons = 5;
-numb_camp = 30;
+numb_camp = 400;
 
-s=randi(2,numb_neurons,numb_neurons);
+%s=randi(2,numb_neurons,numb_neurons);
 
 %lettura matrice spike da file.txt
-f2 = fopen ('C:\Users\Luca\Documents\GitHub\HPPS_NN\Spikes.txt', 'r');
+f2 = fopen ('C:\Users\Luca\HPPS_inputData.txt', 'r');
 str = '';
 for l = 1:numb_camp
     str =  strcat(str, '%g ');
@@ -13,12 +13,13 @@ s1 = fscanf(f2, str ,[numb_camp numb_neurons]);
 s1 = s1';
 s = s1;
 fclose(f2);
+%s1 = s;
 
-for i=1:numb_neurons
-    for j=1:numb_neurons
-        s(i,j)=s(i,j)-1;
-    end
-end
+%for i=1:numb_neurons
+  %  for j=1:numb_neurons
+   %     s(i,j)=s(i,j)-1;
+   % end
+%end
 
 delays=zeros(numb_camp,numb_neurons,numb_neurons); %crea una matrice di 0 3000*40*40
 
@@ -62,7 +63,7 @@ f1 = fopen ('C:\Users\Luca\Documents\GitHub\HPPS_NN\HystoryMatlab.txt', 'w');
 for i = 1:numb_neurons
         for j = 1:numb_neurons
           fprintf(f1, 'coppia %g %g \n', i,j) ;
-          for k = 1:5
+          for k = 1:10
             fprintf(f1, '%g ', delays(k,i,j));
           end
           fprintf(f1, '\n');
