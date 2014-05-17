@@ -5,16 +5,14 @@ import os
 
 N_NEURONS = 5
 
-N_CAMP = 400
+N_CAMP = 20
 
 path = os.getcwd()
 path = path + "/Documents/GitHub/HPPS_NN/"
 #data= np.random.random_integers(0,1,(N_NEURONS,N_CAMP))
-data= np.loadtxt(path + "HPPS_inputData.txt", dtype=int)
+data= np.loadtxt(path + "HPPS_inputData2.txt", dtype=int)
 #gen_rand_data()
 #np.savetxt(path + "HPPS_inputData.txt", data, fmt = '%01d')
-
-print(data)
 
 delay= np.zeros ((N_NEURONS,N_NEURONS,N_CAMP))
 
@@ -67,7 +65,7 @@ def hist1(my_list):
     hist = []
     index1 = 0
     for index2 in range(0, N_CAMP):
-        if index1 > q2.size-1:
+        if index1 > my_list(my_list.size-1):
             hist.append(0)
         else:
             if(my_list[index1] == index2):
@@ -76,11 +74,15 @@ def hist1(my_list):
                 hist.append(0)
             index1 += 1
     return hist
+
+def hist2(my_list):
+    hist = np.zeros((1,N_CAMP), dtype=int)
+    for index in range(0, my_list.size):
+        hist[0][my_list[index]] = hist[0][my_list[index]] + 1
+    return hist
     
 def compress():
     d1 = np.zeros ((N_NEURONS,N_NEURONS, np.ceil(N_CAMP/factor)))
-    print(d1.shape)
-    print(delay_n.shape)
     for i in range(0, np.int64(np.floor(N_CAMP/factor))):   #check +1
         for j in range((i)*factor,((i+1)*factor)):
             for h in range(0, N_NEURONS):
@@ -118,13 +120,14 @@ for i in range(0,N_NEURONS):
         vi = qi[0]  
         vj = qj[0]
         
+        
         for h in range(0,vi.size):
             q2 = my_subctract_v3(vj, vi[h])
-                        
+            print(q2)
             if q2.size>0:
-                my_hist = []
-                my_hist = hist1(q2)
-                delay[i][j] = [my_hist[p] + delay[i][j][p] for p in range(len(my_hist))]
+                my_hist = hist2(q2)
+                for p in range(0, my_hist.size):
+                    delay[i][j][p] = my_hist[0][p] + delay[i][j][p]
     print(i)
     
 sum = np.sum(delay, 2)
