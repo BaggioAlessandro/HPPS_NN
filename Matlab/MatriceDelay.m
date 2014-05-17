@@ -1,10 +1,12 @@
 numb_neurons = 5;
 numb_camp = 400;
 
-%s=randi(2,numb_neurons,numb_neurons);
-
+s=randi(2,numb_neurons,numb_neurons);
+path = pwd
+path = path (1:end-7)
 %lettura matrice spike da file.txt
-f2 = fopen ('C:\Users\Luca\HPPS_inputData.txt', 'r');
+file_name = strcat(path,'\GitHub\HPPS_NN\HPPS_inputData.txt')
+f2 = fopen (file_name, 'r');
 str = '';
 for l = 1:numb_camp
     str =  strcat(str, '%g ');
@@ -59,7 +61,8 @@ m_delaysn=squeeze(max(delaysn,[],1));
 
 %Stampa su file dell'histogram QUANTI CAMPIONAMENTI CI SONO NELLA MATRICE
 %DELAYS????
-f1 = fopen ('C:\Users\Luca\Documents\GitHub\HPPS_NN\HystoryMatlab.txt', 'w');
+file_name = strcat(path,'\GitHub\HPPS_NN\HystoryMatlab.txt')
+f1 = fopen (file_name, 'w');
 for i = 1:numb_neurons
         for j = 1:numb_neurons
           fprintf(f1, 'coppia %g %g \n', i,j) ;
