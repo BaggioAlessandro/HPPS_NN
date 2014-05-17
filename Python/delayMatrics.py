@@ -7,6 +7,10 @@ N_NEURONS = 5
 N_CAMP = 50
 
 data= np.random.random_integers(0,5,(N_NEURONS,N_CAMP))
+#data= np.loadtxt("HPPS_inputData.txt", dtype=int)
+#np.savetxt("HPPS_inputData.txt", data)
+
+print(data)
 
 delay= np.zeros ((N_NEURONS,N_NEURONS,N_CAMP))
 
@@ -134,6 +138,8 @@ for i in range(0,N_NEURONS):
     for j in range(0,N_NEURONS):
         for p in range(0, (d1_100.shape)[2]):
             d1_100n[i][j][p] = d1_100[i][j][p]/sum2[i][j]
+            
+mySave(delay)
 
 np.savez("HPPS_dataPrep.npy", delay = delay, delay_n = delay_n, d1 = d1, d1_100n = d1_100n )   #save also d1        
         
