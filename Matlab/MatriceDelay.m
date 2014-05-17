@@ -12,7 +12,6 @@ for l = 1:numb_camp
     str =  strcat(str, '%g ');
 end
 s1 = fscanf(f2, str ,[numb_camp numb_neurons]);
-s1 = s1';
 s = s1;
 fclose(f2);
 %s1 = s;
