@@ -14,9 +14,6 @@ while True:
         print("diversi")
         break
     
-    i = i+1
-    print(i)
-    
 
 file1.close()
 file2.close()
