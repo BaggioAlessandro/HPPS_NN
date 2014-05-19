@@ -1,0 +1,3 @@
+0,42
+
+250 inner iterazioni * (5*5)
