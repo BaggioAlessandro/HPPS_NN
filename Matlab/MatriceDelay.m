@@ -1,6 +1,9 @@
-numb_neurons = 40;
-numb_camp = 5000;
+numb_neurons = 10;
+numb_camp = 1200;
 f=10;
+threshold = 0.005;
+
+
 start_all = tic;
 %Lettura in input del matrice degli spikes
 start_input = tic;
@@ -81,3 +84,55 @@ t_all = toc(start_all)
 
 mean_iteration_time = mean (mean (t_iteration_delay))
 %save fdelays01 fdelays fdelaysn m_fdelaysn m_fd1 fd1
+
+d1_100=d1(1:101,:,:);
+    for i=1:numb_neurons
+      for j=1:numb_neurons
+        d1_100n(:,i,j)=d1_100(:,i,j)./sum(d1_100(:,i,j));
+      end
+    end
+
+%Seconda parte
+conn=zeros(numb_neurons,numb_neurons);
+  conn_cum=zeros(numb_neurons,numb_neurons);
+  conn_time=inf*ones(numb_neurons,numb_neurons);
+  for i=1:numb_neurons
+    for j=1:numb_neurons
+      q=find(d1_100n(:,i,j)>=threshold);
+      if (not(isempty(q)))
+        conn(i,j)=d1_100n(q(1),i,j);
+        conn_cum(i,j)=sum(d1_100n(q,i,j)); %somma dei camponamenti sopra la soglia
+        conn_time(i,j)=q(1); %q(1) primo istante di tempo sopra la soglia
+      end
+    end
+  end
+  %toglie i casi 1-1 2-2 3-3 4-4
+  conn_n=conn-diag(diag(conn)); %ok solo per matrici quadrate
+  conn_cum_n=conn-diag(diag(conn_cum));
+  
+edges = zeros(numb_neurons, numb_neurons);  
+edges = conn_cum_n;
+
+nn=find([ max(edges,[],2)+max(edges,[],1)']>0)
+ne=sum(sum(edges>0))
+
+nnodes=nn;
+edgesR=zeros(numb_neurons);
+xi=0;
+x=[];
+for i=nnodes'
+  for j=nnodes'
+    if (i~=j)
+      xi=xi+1;
+      x(xi,:)=[i j];
+    end
+  end
+end
+
+for i=1:ne
+  xx=ceil(rand*xi);
+  q=x(xx,:);
+  edgesR(q(1),q(2))=1;
+  x=x([1:xx-1 xx+1:end],:);
+  xi=xi-1;
+end
