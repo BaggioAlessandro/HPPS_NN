@@ -66,8 +66,6 @@ m_delaysn=squeeze(max(delaysn,[],1));
 t_compress = toc(start_compress)
 
 
-t_all = toc(start_all)
-
 mean_iteration_time = mean (mean (t_iteration_delay))
 %save fdelays01 fdelays fdelaysn m_fdelaysn m_fd1 fd1
 
@@ -122,9 +120,18 @@ for i=1:ne
   x=x([1:xx-1 xx+1:end],:);
   xi=xi-1;
 end
+
+start_save = tic;
+%Stampa su file dell'histogram
+my_save('HystoryMatlab', delays , 10, numb_neurons,'%g ');
+my_save('d1Matlab', d1, 10, numb_neurons,'%);
+my_save('d1_100nMatlab', d1_100n, 10, numb_neurons);
+
+t_save = toc(start_save)
+t_all = toc(start_all)
 end
 
-function my_save(string_name, matrix , num_stamp , n_neur)
+function my_save(string_name, matrix , num_stamp , n_neur, typef)
 path = pwd;
 path = path (1:end-7);
 file_name = strcat(path,'\GitHub\HPPS_NN\',string_name,'.txt');
@@ -133,7 +140,7 @@ for i = 1:n_neur
         for j = 1:n_neur
           fprintf(f1, 'coppia %g %g \n', i,j) ;
           for k = 1:num_stamp
-            fprintf(f1, '%g ', matrix(k,i,j));
+            fprintf(f1, typef , matrix(k,i,j));
           end
           fprintf(f1, '\n');
         end

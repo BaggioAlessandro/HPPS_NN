@@ -123,15 +123,16 @@ end
 
 start_save = tic;
 %Stampa su file dell'histogram
-my_save('HystoryMatlab', delays , 10, numb_neurons);
-my_save('d1Matlab', d1, 10, numb_neurons);
-my_save('d1_100nMatlab', d1_100n, 10, numb_neurons);
+my_save3D('HystoryMatlab', delays , 10, numb_neurons,'%g ');
+my_save3D('d1Matlab', d1, 10, numb_neurons,'%10.13f '); 
+my_save3D('d1_100nMatlab', d1_100n, 10, numb_neurons, '%10.13f ');
+my_save2D('edgesMatlab', edges, numb_neurons, '%10.5f ');
 
 t_save = toc(start_save)
 t_all = toc(start_all)
 end
 
-function my_save(string_name, matrix , num_stamp , n_neur)
+function my_save3D(string_name, matrix , num_stamp , n_neur, typef)
 path = pwd;
 path = path (1:end-7);
 file_name = strcat(path,'\GitHub\HPPS_NN\',string_name,'.txt');
@@ -140,10 +141,24 @@ for i = 1:n_neur
         for j = 1:n_neur
           fprintf(f1, 'coppia %g %g \n', i,j) ;
           for k = 1:num_stamp
-            fprintf(f1, '%g ', matrix(k,i,j));
+            fprintf(f1, typef , matrix(k,i,j));
           end
           fprintf(f1, '\n');
         end
+end
+fclose(f1);
+end
+
+function my_save2D(string_name, matrix, n_neur, typef)
+path = pwd;
+path = path (1:end-7);
+file_name = strcat(path,'\GitHub\HPPS_NN\',string_name,'.txt');
+f1 = fopen (file_name, 'w');
+for i = 1:n_neur
+    for j = 1:n_neur
+      fprintf(f1, typef, matrix(i,j));
+    end
+     fprintf(f1, '\n');
 end
 fclose(f1);
 end
