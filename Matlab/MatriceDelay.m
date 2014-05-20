@@ -9,8 +9,7 @@ start_all = tic;
 %Lettura in input del matrice degli spikes
 start_input = tic;
 path = pwd;
-path = path (1:end-7);
-file_name = strcat(path,'\GitHub\HPPS_NN\HPPS_inputData.txt');
+file_name = strcat(path,'\HPPS_inputData.txt');
 f2 = fopen (file_name, 'r');
 str = '';
 for l = 1:numb_camp
@@ -25,7 +24,6 @@ start_delay = tic;
 t_iteration_delay = zeros(numb_neurons, numb_neurons);
 delays=zeros(numb_camp,numb_neurons,numb_neurons); %crea una matrice di 0 3000*40*40
 for i=1:numb_neurons
-    i
   for j=1:numb_neurons
     t1 = tic;
     qi=find(s(:,i)==1); %estrae i time degli spike di i
@@ -134,8 +132,7 @@ end
 
 function my_save3D(string_name, matrix , num_stamp , n_neur, typef)
 path = pwd;
-path = path (1:end-7);
-file_name = strcat(path,'\GitHub\HPPS_NN\',string_name,'.txt');
+file_name = strcat(path,string_name,'.txt');
 f1 = fopen (file_name, 'w');
 for i = 1:n_neur
         for j = 1:n_neur
@@ -152,7 +149,7 @@ end
 function my_save2D(string_name, matrix, n_neur, typef)
 path = pwd;
 path = path (1:end-7);
-file_name = strcat(path,'\GitHub\HPPS_NN\',string_name,'.txt');
+file_name = strcat(path,string_name,'.txt');
 f1 = fopen (file_name, 'w');
 for i = 1:n_neur
     for j = 1:n_neur
@@ -160,5 +157,6 @@ for i = 1:n_neur
     end
      fprintf(f1, '\n');
 end
+print('culo')
 fclose(f1);
 end
