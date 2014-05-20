@@ -4,10 +4,7 @@ function show_graph_d=show_graph_d2( threshold, fig, firstonly )
 % if not specified, all 22 active nodes [25..64] will be shown.
 % can pass [] or omit other params to use default values.
 
-if (~exist('fig') || isempty(fig) )
-    fig = 580;
-end
-figure(fig); clf; set(fig,'DoubleBuffer','on') %Flash-free rendering
+numb_neurons = 10;
 
 if (firstonly)
   if (~exist('fd1'))
@@ -15,8 +12,8 @@ if (firstonly)
   end
   if (~exist('fd1_100n'))
     fd1_100=fd1(1:101,:,:);
-    for i=1:40
-      for j=1:40
+    for i=1:numb_neurons
+      for j=1:numb_neurons
         fd1_100n(:,i,j)=fd1_100(:,i,j)./sum(fd1_100(:,i,j));
       end
     end
@@ -27,8 +24,8 @@ else
   end
   if (~exist('d1_100n'))
     d1_100=d1(1:101,:,:);
-    for i=1:40
-      for j=1:40
+    for i=1:numb_neurons
+      for j=1:numb_neurons
         d1_100n(:,i,j)=d1_100(:,i,j)./sum(d1_100(:,i,j));
       end
     end
@@ -66,8 +63,8 @@ else
   conn=zeros(40,40);
   conn_cum=zeros(40,40);
   conn_time=inf*ones(40,40);
-  for i=1:40
-    for j=1:40
+  for i=1:numb_neurons
+    for j=1:numb_neurons
       q=find(d1_100n(:,i,j)>=threshold);
       if (not(isempty(q)))
         conn(i,j)=d1_100n(q(1),i,j);
@@ -78,7 +75,8 @@ else
   end
   %toglie i casi 1-1 2-2 3-3 4-4
   conn_n=conn-diag(diag(conn)); %ok solo per matrici quadrate
-  conn_cum_n=conn-diag(diag(conn_cum));
+  culo = diag(diag(conn_cum))
+  conn_cum_n=conn_cum-diag(diag(conn_cum));
 end
 
 edges=zeros(64);
@@ -114,12 +112,4 @@ end
 
 show_graph_draw(threshold, fig, firstonly, edges, 0);
 show_graph_draw(threshold, fig+10, firstonly, edgesR, 1);
-%edges2=clean_graph(edges);
-%show_graph_draw(threshold, 10+fig, firstonly, edges2);
-%edges3=clean_graph(edges2);
-%show_graph_draw(threshold, 20+fig, firstonly, edges3);
-%edges4=clean_graph(edges3);
-%show_graph_draw(threshold, 30+fig, firstonly, edges4);
-%edges5=clean_graph(edges4);
-%show_graph_draw(threshold, 40+fig, firstonly, edges5);
 return;

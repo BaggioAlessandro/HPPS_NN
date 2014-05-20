@@ -1,6 +1,6 @@
-threshold = 0.1;
+threshold = 0.01;
 fig = 580;
-firstonly = 1;
+firstonly = 0;
 
 
 show_graph_d2( threshold, fig, firstonly )
