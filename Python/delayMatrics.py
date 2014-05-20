@@ -3,7 +3,7 @@ import datetime
 import numpy as np
 import os
 
-N_NEURONS = 10
+N_NEURONS = 5
 
 N_CAMP = 5000
 
@@ -86,12 +86,10 @@ def hist3(my_list):
     return hist
     
 def compress():
-    d1 = np.zeros ((N_NEURONS,N_NEURONS, np.ceil(N_CAMP/factor)))
+    d1 = np.zeros ((N_NEURONS, N_NEURONS, np.floor(N_CAMP/factor)+1))
     for i in range(0, np.int64(np.floor(N_CAMP/factor))):   #check +1
-        for j in range((i)*factor,((i+1)*factor)):
-            for h in range(0, N_NEURONS):
-                for k in range(0, N_NEURONS):
-                    d1[h][k][i]= d1[h][k][i] + delay_n[h][k][j]
+        print(d1[:][:][i].shape)
+        d1[:][:][i] = np.sum(delay[:][:][i*factor:(i+1)*factor], 2)
     
     if(N_CAMP%factor != 0):
         i = i+1
