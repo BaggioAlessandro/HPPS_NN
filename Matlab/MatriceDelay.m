@@ -132,7 +132,7 @@ end
 
 function my_save3D(string_name, matrix , num_stamp , n_neur, typef)
 path = pwd;
-file_name = strcat(path,string_name,'.txt');
+file_name = strcat(path,'/',string_name,'.txt');
 f1 = fopen (file_name, 'w');
 for i = 1:n_neur
         for j = 1:n_neur
@@ -148,8 +148,7 @@ end
 
 function my_save2D(string_name, matrix, n_neur, typef)
 path = pwd;
-path = path (1:end-7);
-file_name = strcat(path,string_name,'.txt');
+file_name = strcat(path,'/',string_name,'.txt');
 f1 = fopen (file_name, 'w');
 for i = 1:n_neur
     for j = 1:n_neur
@@ -157,6 +156,5 @@ for i = 1:n_neur
     end
      fprintf(f1, '\n');
 end
-print('culo')
 fclose(f1);
 end
