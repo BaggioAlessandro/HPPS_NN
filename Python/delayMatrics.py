@@ -88,8 +88,7 @@ def hist3(my_list):
 def compress():
     d1 = np.zeros ((N_NEURONS, N_NEURONS, np.floor(N_CAMP/factor)+1))
     for i in range(0, np.int64(np.floor(N_CAMP/factor))):   #check +1
-        print(d1[:][:][i].shape)
-        d1[:][:][i] = np.sum(delay[:][:][i*factor:(i+1)*factor], 2)
+        d1[:,:,i] = np.sum(delay[:,:,i*factor:(i+1)*factor], 2)
     
     if(N_CAMP%factor != 0):
         i = i+1
