@@ -3,9 +3,9 @@ import datetime
 import numpy as np
 import os
 
-N_NEURONS = 5
+N_NEURONS = 10
 
-N_CAMP = 5000
+N_CAMP = 1200
 
 def gen_rand_data():
     for i in range(0,N_NEURONS):
@@ -97,12 +97,12 @@ def compress():
     
     return d1
     
-def mySave (my_matrix):
-    file = open(path+"Hystogram.txt", "w")
+def mySave (my_matrix,fileName):
+    file = open(path+ fileName +".txt", "w")
     for i in range(0,N_NEURONS):
         for j in range(0,N_NEURONS):
           file.write("coppia " + str(i+1) + " " + str(j+1) + "\n")
-          for k in range(0, N_CAMP):
+          for k in range(0, 10):
                 file.write(str(my_matrix[i][j][k]) + " ")
           file.write("\n")  
     file.close
@@ -164,7 +164,9 @@ for i in range(0,N_NEURONS):
         for p in range(0, 100):
             d1_100n[i][j][p] = d1_100[i][j][p]/sum2[i][j]
             
-mySave(delay)
+mySave(delay,"Hystogram")
+mySave(d1, "d1Python")
+mySave(d1_100n, "d1_100nPython")
 
 np.savez("HPPS_dataPrep.npy", delay = delay, delay_n = delay_n, d1 = d1, d1_100n = d1_100n )   #save also d1        
         
