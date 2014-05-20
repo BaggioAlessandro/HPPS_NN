@@ -92,8 +92,7 @@ def compress():
     
     if(N_CAMP%factor != 0):
         i = i+1
-        for j in range(np.int64(np.floor(N_CAMP/factor))*factor, N_CAMP):
-            d1[:][:][i]= d1[:][:][i] + delay_n[:][:][j]
+        d1[:,:,i]= np.sum(delay[:,:,(i)*f:], 2)
     
     return d1
     
