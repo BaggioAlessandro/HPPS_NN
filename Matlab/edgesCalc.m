@@ -1,0 +1,60 @@
+function edgesCalc(threshold,numb_neurons)
+import magicFunctions
+load d1
+
+startEdges = tic;
+d1_100=d1(1:101,:,:);
+    for i=1:numb_neurons
+      for j=1:numb_neurons
+        d1_100n(:,i,j)=d1_100(:,i,j)./sum(d1_100(:,i,j));
+      end
+    end
+
+%Seconda parte
+conn=zeros(numb_neurons,numb_neurons);
+  conn_cum=zeros(numb_neurons,numb_neurons);
+  conn_time=inf*ones(numb_neurons,numb_neurons);
+  for i=1:numb_neurons
+    for j=1:numb_neurons
+      q=find(d1_100n(:,i,j)>=threshold);
+      if (not(isempty(q)))
+        conn(i,j)=d1_100n(q(1),i,j);
+        conn_cum(i,j)=sum(d1_100n(q,i,j)); %somma dei camponamenti sopra la soglia
+        conn_time(i,j)=q(1); %q(1) primo istante di tempo sopra la soglia
+      end
+    end
+  end
+  %toglie i casi 1-1 2-2 3-3 4-4
+  conn_n = conn - diag(diag(conn)); %ok solo per matrici quadrate
+  conn_cum_n = conn_cum - diag(diag(conn_cum));
+  
+edges = zeros(numb_neurons, numb_neurons);  
+edges = conn_cum_n;
+
+nn=find([ max(edges,[],2)+max(edges,[],1)']>0);
+ne=sum(sum(edges>0));
+
+nnodes=nn;
+edgesR=zeros(numb_neurons);
+xi=0;
+x=[];
+for i=nnodes'
+  for j=nnodes'
+    if (i~=j)
+      xi=xi+1;
+      x(xi,:)=[i j];
+    end
+  end
+end
+
+for i=1:ne
+  xx=ceil(rand*xi);
+  q=x(xx,:);
+  edgesR(q(1),q(2))=1;
+  x=x([1:xx-1 xx+1:end],:);
+  xi=xi-1;
+end
+
+t_edges = toc(startEdges)
+my_save3D('d1_100nMatlab', d1_100n, 10, numb_neurons, '%10.13f ');
+my_save2D('edgesMatlab', edges, numb_neurons, '%10.5f ');

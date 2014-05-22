@@ -1,0 +1,15 @@
+function main
+numn = 10;
+numc = 1200;
+factor = 10;
+threshold = 0.4;
+
+start_all = tic;
+
+%delayHistogram('HPPS_inputData',numn,numc)
+%NormalizeHist(numn)
+%CompressHist(numn, factor)
+%edgesCalc(threshold,numn)
+
+
+t_all = toc(start_all)

@@ -2,29 +2,29 @@ function main
 numb_neurons = 10;
 numb_camp = 1200;
 f=10;
-threshold = 0.017;
+threshold = 0.4;
+
+%Lettura in input del matrice degli spikes
+
+%tmp_dati = csvread('C:\Users\Luca\Documents\GitHub\HPPS_NN\DatiReali\A.txt');
 
 
 start_all = tic;
-%Lettura in input del matrice degli spikes
 start_input = tic;
 path = pwd;
-file_name = strcat(path,'\HPPS_inputData.txt');
+file_name = strcat(path,'\HPPS_inputData.txt')
 f2 = fopen (file_name, 'r');
-str = '';
-for l = 1:numb_camp
-    str =  strcat(str, '%g ');
-end
-s1 = fscanf(f2, str ,[numb_camp numb_neurons]);
-s = s1;
+s = fscanf(f2,'%g ',[numb_camp numb_neurons]);
 fclose(f2);
-t_input = toc(start_input)
 
+t_input = toc(start_input)
 start_delay = tic;
 t_iteration_delay = zeros(numb_neurons, numb_neurons);
 delays=zeros(numb_camp,numb_neurons,numb_neurons); %crea una matrice di 0 3000*40*40
 for i=1:numb_neurons
+    i
   for j=1:numb_neurons
+       j
     t1 = tic;
     qi=find(s(:,i)==1); %estrae i time degli spike di i
     qj=find(s(:,j)==1); %estrae i time degli spike di j
@@ -58,9 +58,6 @@ if i<length(delaysn)./f %gestisce la posizione 501
   i=i+1;
   d1(i,:)=sum(delaysn((i-1)*f+1:end,:,:),1);
 end
-m_d1=squeeze(max(d1,[],1)); %ritorna il valore massimo per ogni riga lungo la prima dimensione
-
-m_delaysn=squeeze(max(delaysn,[],1));
 t_compress = toc(start_compress)
 
 
@@ -88,15 +85,15 @@ conn=zeros(numb_neurons,numb_neurons);
       end
     end
   end
-  %toglie i casi 1-1 2-2 3-3 4-4
+  %toglie i casi 1-1 2-2 3-3 4-1
   conn_n = conn - diag(diag(conn)); %ok solo per matrici quadrate
   conn_cum_n = conn_cum - diag(diag(conn_cum));
   
 edges = zeros(numb_neurons, numb_neurons);  
 edges = conn_cum_n;
 
-nn=find([ max(edges,[],2)+max(edges,[],1)']>0)
-ne=sum(sum(edges>0))
+nn=find([ max(edges,[],2)+max(edges,[],1)']>0);
+ne=sum(sum(edges>0));
 
 nnodes=nn;
 edgesR=zeros(numb_neurons);
@@ -128,6 +125,14 @@ my_save2D('edgesMatlab', edges, numb_neurons, '%10.5f ');
 
 t_save = toc(start_save)
 t_all = toc(start_all)
+saveTime('t_all',t_all,numb_neurons,numb_camp);
+saveTime('t_input',t_input,numb_neurons,numb_camp);
+saveTime('t_delay',t_delay,numb_neurons,numb_camp);
+saveTime('t_normal',t_normal,numb_neurons,numb_camp);
+saveTime('t_compress',t_compress,numb_neurons,numb_camp);
+saveTime('t_save',t_save,numb_neurons,numb_camp);
+saveTime('mean_iteration_time',mean_iteration_time,numb_neurons,numb_camp);
+
 end
 
 function my_save3D(string_name, matrix , num_stamp , n_neur, typef)
@@ -156,5 +161,13 @@ for i = 1:n_neur
     end
      fprintf(f1, '\n');
 end
+fclose(f1);
+end
+
+function saveTime(string_name, value, numb_ne, numb_camp)
+path = pwd;
+file_name = strcat(path,'/timeDataMatlab.txt');
+f1 = fopen(file_name, 'a+');
+fprintf(f1, '%s %g %g %g\n', string_name, value, numb_ne, numb_camp );
 fclose(f1);
 end
