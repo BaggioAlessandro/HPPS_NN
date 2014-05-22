@@ -1,22 +1,26 @@
-function show_graph_draw=show_graph_draw( threshold, fig, firstonly, edges, rr)
+function show_graph_draw=show_graph_draw()
 % nodelist is a 5-digit integer [row1|row2|row3|row4|row5] that plots rowX
 % if rowX is non-zero; or a list of nodes [ node1 node2 ... ] e.g. 1:64
 % if not specified, all 22 active nodes [25..64] will be shown.
 % can pass [] or omit other params to use default values.
+
+load edges
+rr = 0;
+firstonly = true;
 
 if (~exist('fig') || isempty(fig) )
     fig = 580;
 end
 figure(fig); clf; set(fig,'DoubleBuffer','on') %Flash-free rendering
 
-nodes = 25:64;
+nodes = 1:numb_neurons;
 
 channel_pairs = nchoosek( nodes, 2 );
 channel_pairs = sortrows( channel_pairs );
 
 rand( 'state', 0 );
 warning off MATLAB:divideByZero;
-LTable = 1./eye(64) - 1;            % put zeros on diagonal and inf elsewhere
+LTable = 1./eye(numb_neurons) - 1;            % put zeros on diagonal and inf elsewhere
 i = 0;
 excised_nodes = [];
 for node = nodes

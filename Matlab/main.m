@@ -2,7 +2,7 @@ function main
 numn = 10;
 numc = 300000;
 factor = 10;
-threshold = 0.4;
+threshold = 0.1;
 
 start_all = tic;
 
@@ -10,7 +10,7 @@ start_all = tic;
 %delayHistogram('01',numn,numc)
 %NormalizeHist(numn)
 %CompressHist(numn, factor)
-%edgesCalc(threshold,numn)
+edgesCalc(threshold,numn)
 
 
 t_all = toc(start_all)

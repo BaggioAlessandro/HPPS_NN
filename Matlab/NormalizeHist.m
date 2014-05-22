@@ -1,5 +1,5 @@
 function NormalizeHist(numb_neurons)
-load delays
+load delays_real_example
 start_normal = tic;
 for i=1:numb_neurons
   for j=1:numb_neurons

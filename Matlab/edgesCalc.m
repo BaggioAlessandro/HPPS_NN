@@ -55,6 +55,8 @@ for i=1:ne
   xi=xi-1;
 end
 
+save edges
+
 t_edges = toc(startEdges)
 my_save3D('d1_100nMatlab', d1_100n, 10, numb_neurons, '%10.13f ');
 my_save2D('edgesMatlab', edges, numb_neurons, '%10.5f ');
