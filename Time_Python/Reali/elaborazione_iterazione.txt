@@ -1,0 +1,7 @@
+media iterazione = 10.30418529
+max iterazione = 45.701497
+min iterazione = 0.94663
+media iterazione/size 1 = 0.0012352808439446677
+varianza iterazione/size 1 = 4.8771274129859344e-08
+max iterazione/size 1 = 0.0017648772736049432
+min iterazione/size 1 = 0.000933839708011583
