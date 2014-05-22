@@ -63,13 +63,15 @@ def mySave (my_matrix,fileName):
                 file.write(str(my_matrix[i][j][k]) + " ")
           file.write("\n")  
     file.close
+
  
 #inizio calcolo della matrice di delay
 for i in range(0,N_NEURONS):
-    for j in range(0,N_NEURONS):
-        delta_it = datetime.timedelta()
-        time_it_start = datetime.datetime.now()
+    delta_it = datetime.timedelta()
+    time_it_start = datetime.datetime.now()
        
+    for j in range(0,N_NEURONS):
+        
         qi = np.where(data[i][:] > 0)   #tupla contenente un array
         qj = np.where(data[j][:] > 0)
         
@@ -87,10 +89,11 @@ for i in range(0,N_NEURONS):
                 
                 delay[i][j][:] += my_hist[0][:] 
                 
-        time_it_fine = datetime.datetime.now()
-        delta_it = time_it_fine - time_it_start
-        with open(path+"time_iteration.txt", "a") as file1:
-            file1.write(str((delta_it.seconds.real*CONVERSION + delta_it.microseconds.real)/CONVERSION) + " n_1 = " + str(vi.size) + " i = " + str(i) + " j = " + str(j) + "\n")
+    
+    time_it_fine = datetime.datetime.now()
+    delta_it = time_it_fine - time_it_start
+    with open(path+"time_v2_iteration.txt", "a") as file1:
+        file1.write(str(((delta_it.seconds.real*CONVERSION + delta_it.microseconds.real)/CONVERSION)/N_NEURONS) + " n_1 = " + str(vi.size) + " i = " + str(i) + " j = " + str(j) + "\n")
         
     print(i)
 sum = np.sum(delay, 2)
@@ -133,13 +136,13 @@ delta_tot = time_fine - time_start
 time_post2 = datetime.datetime.now()            
 delta1 = delta1 + time22 - time21
 
-with open(path+"time_all_program1.txt", "a") as file1:
+with open(path+"time_v2_all_program1.txt", "a") as file1:
     file1.write(str((delta_tot.seconds.real*CONVERSION + delta_tot.microseconds.real)/CONVERSION)+"\n")
             
-with open(path+"time_load.txt", "a") as file1:
+with open(path+"time_v2_load.txt", "a") as file1:
     file1.write(str((delta_time_load.seconds.real*CONVERSION + delta_time_load.microseconds.real)/CONVERSION)+"\n")
     
-with open(path+"time_post.txt", "a") as file1:
+with open(path+"time_v2_post.txt", "a") as file1:
     file1.write(str((delta_time_post.seconds.real*CONVERSION + delta_time_post.microseconds.real)/CONVERSION)+"\n")
             
 mySave(delay,"Hystogram")
