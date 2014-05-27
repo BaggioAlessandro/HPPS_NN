@@ -1,7 +1,7 @@
 import os
 path = os.getcwd()
 path = path + "/Documents/GitHub/HPPS_NN/"
-file1 = open(path + "HystoryMatlab.txt","r")
+file1 = open(path + "real.txt","r")
 file2 = open(path + "Hystogram.txt","r")
 i = 0
 while True:
@@ -11,9 +11,8 @@ while True:
         print("uguali")
         break
     if not (read1 is read2):
+        print(file1.tell())
         print("diversi")
         break
-    
-
 file1.close()
 file2.close()
