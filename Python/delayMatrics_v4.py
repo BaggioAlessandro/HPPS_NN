@@ -2,7 +2,7 @@ import random
 import datetime
 import numpy as np
 import os
-from threading import Thread
+import threading
 
 N_NEURONS = 10
 
@@ -26,6 +26,8 @@ delta_time_post = datetime.timedelta()
 time_start = datetime.datetime.now()
 path = os.getcwd()
 path = path + "/Documents/GitHub/HPPS_NN/"
+
+semaphore = threading.Semaphore(N_NEURONS)
 
 time_load1 = datetime.datetime.now()
 
@@ -79,7 +81,7 @@ def mySave_2D (my_matrix,fileName):
         file.write("\n")    
     file.close
     
-def inner_cicle(index1,index2, vi):
+def inner_cicle(index1,index2, vi, sem):
     #tupla contenente un array
     qj = np.where(data[j][:] > 0)
         
@@ -93,6 +95,7 @@ def inner_cicle(index1,index2, vi):
             my_hist = hist3(q2)
                 
             delay[index1][index2][:] += my_hist[0][:]
+    sem.release()
     
 thread_list = []
 #inizio calcolo della matrice di delay
@@ -103,15 +106,16 @@ for i in range(0,N_NEURONS):
     for j in range(0,N_NEURONS):
         delta_it = datetime.timedelta()
         time_it_start = datetime.datetime.now()
-        thread_list.append (Thread(target = inner_cicle, args = (i,j,qi[0] )) )
+        semaphore.acquire
+        thread_list.append (Thread(target = inner_cicle, args = (i,j,qi[0],semaphore )) )
         thread_list[-1].start()
         
 
         time_it_fine = datetime.datetime.now()
         delta_it = time_it_fine - time_it_start
-        with open(path+"time_iteration.txt", "a") as file1:
-            file1.write(str((delta_it.seconds.real*CONVERSION + delta_it.microseconds.real)/CONVERSION) + " n_1 = " + str(vi.size) + " i = " + str(i) + " j = " + str(j) + "\n")
-    print(i)
+        #with open(path+"time_iteration.txt", "a") as file1:
+           # file1.write(str((delta_it.seconds.real*CONVERSION + delta_it.microseconds.real)/CONVERSION) + " n_1 = " + str(vi.size) + " i = " + str(i) + " j = " + str(j) + "\n")
+    #print(i)
 
 for i in range(len(thread_list)):
     thread_list[i].join()

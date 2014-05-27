@@ -1,11 +1,11 @@
 import datetime
 import numpy as np
 import os
-from threading import Thread
+import threading
 
 N_NEURONS = 10
 
-N_CAMP = 1200
+N_CAMP = 300000
 
 N_DELAYS = 100
 
@@ -17,6 +17,8 @@ path = path + "/Documents/GitHub/HPPS_NN/"
 data= np.loadtxt(path + "01.txt", dtype=int)
 
 delay= np.zeros ((N_NEURONS,N_NEURONS,N_DELAYS), dtype=int)
+
+semaphore = threading.Semaphore(N_NEURONS)
 
 def my_subctract_v3(my_list, item):
     q = my_list - item
@@ -47,7 +49,7 @@ def mySave_2D (my_matrix,fileName):
         file.write("\n")    
     file.close
     
-def inner_cicle(index1,index2, vi):
+def inner_cicle(index1,index2, vi, sem):
     #tupla contenente un array
     qj = np.where(data[j][:] > 0)
         
@@ -61,6 +63,7 @@ def inner_cicle(index1,index2, vi):
             my_hist = hist3(q2)
                 
             delay[index1][index2][:] += my_hist[0][:]
+    sem.release
     
 thread_list = []
 #inizio calcolo della matrice di delay
@@ -69,10 +72,14 @@ for i in range(0,N_NEURONS):
     
     #prendo solo il vettore
     for j in range(0,N_NEURONS):
-        thread_list.append (Thread(target = inner_cicle, args = (i,j,qi[0] )) )
+        semaphore.acquire
+        thread_list.append (Thread(target = inner_cicle, args = (i,j,qi[0],semaphore )) )
         thread_list[-1].start()
         
     print(i)
 
 for i in range(len(thread_list)):
     thread_list[i].join()
+    print(str(i) + " end")
+
+mySave_3D (delay,"ppopo")
