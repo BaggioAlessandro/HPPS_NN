@@ -3,12 +3,7 @@ load delays_mod
 start_normal = tic;
 for i=1:numb_neurons
   for j=1:numb_neurons
-    delaysn(:,i,j) = delays1(:,i,j).*(delays(1,i,i)/delays(1,j,j));   %delay normalizzato sulla somma totale dei delay i,j
-  end
-end
-for i=1:numb_neurons
-  for j=1:numb_neurons
-    delaysn(:,i,j) = delays1(:,i,j)./(delays(1,i,i));   %delay normalizzato sulla somma totale dei delay i,j
+    delaysn(:,i,j) = delays(:,i,j)./(delays(1,i,i));   %delay normalizzato sulla somma totale dei delay i,j
   end
 end
 
