@@ -11,6 +11,6 @@ start_all = tic;
 %media(numn, numc)
 %NormalizeHist_v2(numn)
 %CompressHist(numn, factor)
-edgesCalc(threshold,numn)
+edgesCalc_v3(threshold,numn)
 
 t_all = toc(start_all)
