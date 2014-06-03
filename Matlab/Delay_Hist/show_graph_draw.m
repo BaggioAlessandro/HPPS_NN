@@ -7,6 +7,7 @@ function show_graph_draw=show_graph_draw()
 load edges
 rr = 0;
 firstonly = true;
+threshold = 1;
 
 if (~exist('fig') || isempty(fig) )
     fig = 580;
@@ -104,10 +105,6 @@ tx = text( 0.1*AX(1)+0.9*AX(2), 0.4*AX(3)+0.6*AX(4), ...
 set (tx, 'fontsize', 12, 'fontweight', 'bold' );
 drawnow;
 
-save( sprintf( 'graphD%dF%.2f_data.mat', firstonly, threshold ), 'edges', 'LTable', 'nodes', 'node_coordinates', 'L', 'C', 'degree' );
-%disp( 'Graph saved. Hit a key to continue: ' );
-%pause;
-
 colormap('default');
 default_colormap = colormap;
 r = 0.1;
@@ -179,4 +176,4 @@ show_graph_d{1}=nan;
 show_graph_d{2}=nan;
 show_graph_d{3}=[];
 end
-return;
+return; 

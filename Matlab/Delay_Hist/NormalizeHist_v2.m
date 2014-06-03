@@ -7,5 +7,5 @@ for i=1:numb_neurons
   end
 end
 t_normal = toc(start_normal)
-
+my_save3D('prova', delays , 20 , numb_neurons, '%g ')
 save delaysn

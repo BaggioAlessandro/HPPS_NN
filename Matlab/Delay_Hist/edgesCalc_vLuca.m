@@ -8,7 +8,7 @@ d1_100=d1(1:101,:,:);
       for j=1:numb_neurons
         d1_100n(:,i,j)=d1_100(:,i,j);
       end
-      end
+    end
 for i=1:numb_neurons
   for j=1:numb_neurons
       for h=1:50
@@ -18,23 +18,11 @@ for i=1:numb_neurons
       end
   end
 end
-d1_m = d1_100n(2:22,:,:);
+d1_m = d1_100n(2,:,:);
 
-my_save3D('prova', d1_m , 20 , 10, '%10.13f ')
+my_save3D('prova', d1_m , 10 , 10, '%10.13f ')
 
 f=3;
-
-d1_m2=zeros(floor(length(d1_m)./f)+1,numb_neurons,numb_neurons);    %è come se andasse a comprimere la matrice di partenza lungo l'asse del tempo
-for i=1:floor(length(d1_m)./f)
-  d1_m2(i,:,:)=sum(d1_m(((i-1)*f)+1:i*f, :, :),1);  %1 indica che la somma è fatta lungo la prima dimensione
-end
-if i<length(d1_m)./f %gestisce la posizione 501
-  i=i+1;
-  d1_m2(i,:,:)=sum(d1_m((i-1)*f+1:end,:,:),1);
-end
-
-my_save3D('prova2', d1_m2 , 6 , 10, '%10.13f ')
-
 
 %Seconda parte
 conn=zeros(numb_neurons,numb_neurons);
@@ -42,10 +30,10 @@ conn=zeros(numb_neurons,numb_neurons);
   conn_time=inf*ones(numb_neurons,numb_neurons);
   for i=1:numb_neurons
     for j=1:numb_neurons
-      q=find(d1_m2(:,i,j)>=threshold);
+      q=find(d1_m(:,i,j)>=threshold);
       if (not(isempty(q)))
-        conn(i,j)=d1_m2(q(1),i,j);
-        conn_cum(i,j)=sum(d1_m2(q,i,j)); %somma dei camponamenti sopra la soglia
+        conn(i,j)=d1_m(q(1),i,j);
+        conn_cum(i,j)=sum(d1_m(q,i,j)); %somma dei camponamenti sopra la soglia
         conn_time(i,j)=q(1); %q(1) primo istante di tempo sopra la soglia
       end
     end
