@@ -64,7 +64,7 @@ plot(xx,xcb);
 filename=[d e];
 print(n,'-djpeg',filename);
 
-
+save correlogram
 
 %unused code, discard
 
