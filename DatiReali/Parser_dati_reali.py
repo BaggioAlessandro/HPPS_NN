@@ -2,18 +2,19 @@ import csv
 import os
 
 CAMP = 300.0
-PRECISION = 0.0001
+RESOLUTION = 0.0001
+PRECISION = 0.00001
 N_NEURON = 10
 
-destination = "01.txt"
+destination = "01_new_10.txt"
 
 path = os.getcwd()
-path = path + "\\Documents\\GitHub\\HPPS_NN\\DatiReali\\"
+path = path + "\\Documents\\GitHub\\HPPS_NN\\DatiReali\\Rete_10\\Modello_Nuovo\\"
 
 path2 = os.getcwd()
 path2 = path2 + "\\Documents\\GitHub\\HPPS_NN\\"
 
-nomi = ["A.csv","B.csv","C.csv","D.csv","E.csv","F.csv","G.csv","H.csv","I.csv","L.csv"]
+nomi = ["A.csv","B.csv","C.csv","D.csv","E.csv","F.csv","G.csv","H.csv","I.csv"]
 
 for i in nomi:
     time_stamp = []
@@ -27,7 +28,7 @@ for i in nomi:
     
     print(len(time_stamp))
     with open(path2 + destination, 'a') as file2:
-        count = 0.001
+        count = RESOLUTION
         j = 0
         k = 0
         while count <= CAMP:
@@ -40,13 +41,13 @@ for i in nomi:
             else:
                 file2.write("0 ")
             
-            count = count + 0.001
+            count = count + RESOLUTION
         
         while count <= CAMP:
             file2.write("0 ")
-            count = count + 0.001
+            count = count + RESOLUTION
         file2.write("\n")
             
         if(k != len(time_stamp)):
-            print("merda"+i)
+            print("merda"+i+str(k))
     
