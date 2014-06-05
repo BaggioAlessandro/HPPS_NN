@@ -19,30 +19,33 @@ end
 if(size(b,1)==1)
     b=b';
 end
-    
+a = a + (1e-4 * 5)
+b = b + (1e-4 * 5)
 d=A(1:(length(A)-4)); %extracting filename
 e=B(1:(length(B)-4));
 
 fine=max(a(length(a),1),b(length(b),1));
 temp=0:0.001:300; %creating a vector of the same size as the longest input vector
 
-maxlags= 200;
+maxlags= 5;
 t1_binned = histc(a(:,1), temp); %timestamps to binned
 t2_binned = histc(b(:,1), temp);
 
+
 t1_binnedBeta = data(1:300000); %timestamps to binned
 t2_binnedBeta = data(300001:600000);
-
-if t1_binned ~= t1_binned
-    print ('diversi')
+disp(length(t1_binned));
+if t1_binned(2:300001) ~= t1_binnedBeta
+    disp('lucaculo')
 end
-
 %making sure the two files are the same size, otherwise the 
 if (size(t1_binned)~=size(t2_binned))
     disp('WARNING: the input vectors are not the same size. Correlation cannot be calculated, please zero-pad the shorter one');
 end
 
-xc = xcorr(t1_binned, t2_binned,maxlags); % actual crosscorrelation
+xc = xcorr(t2_binned(1:fine*1000), t1_binned(1:fine*1000),maxlags); % actual crosscorrelation
+disp(xc);
+
 
 %smoothing: are we going to do it?
 %xc = xc(round(length(xc)/2)-2000:round(length(xc)/2)+2000);
@@ -57,61 +60,9 @@ end
 
 %creating the two vectors for the plotting (from -30 to +30)
 xx=-30:30;
-xcb=xc(200-29:200+31);
 
 %cubic spline interpolation
 %p=spline(xx,xcb);
 %x=linspace(-30,30,2001);
 
 %plotting the interpolated function
-n=figure;
-plot(xx,xcb);
-
-%saving the jpeg file
-filename=[d e];
-print(n,'-djpeg',filename);
-
-save correlogram
-
-%unused code, discard
-
-
-
-%temp=temp';
-
-%v1= zeros(length(temp),1);
-%i=1;
-
-%while ((round(a(i,2)*10)<=length(temp)) && i<length(a))
-%    v1(round(a(i,2)*10))=1;
-%    i=i+1;
-%end
-
-
-%v2= zeros(length(temp),1);
-%i=1;
-
-%while (round(b(i,2)*10)<=length(temp) && i<length(b))
-%    v2(round(b(i,2)*10))=1;
-%    i=i+1;
-%end
-
-%ris=xcorr(v1,v2);
-
-%ris(floor(length(ris)/2)-floor(length(ris)/100):floor(length(ris)/2)+floor(length(ris)/100))=zeros(2*floor(length(ris)/100)+1,1);
-
-
-%v=[];
-
-%for i=1:40
-%    l=floor(length(ris)/40);
-%    v(i)=mean(ris(1+l*(i-1):l*i));
-%end
-
-%v(20)=0;
-
-%figure;
-%bar(v);
-
-
-end
