@@ -31,7 +31,8 @@ data= np.loadtxt(path + "01.txt", dtype=int)
 
 a = np.loadtxt(path + "/DatiReali/Rete_10/Modello_Vecchio/A.csv", dtype=np.float32,delimiter = ',')
 b = np.loadtxt(path + "/DatiReali/Rete_10/Modello_Vecchio/B.csv", dtype=np.float32,delimiter = ',')
-
+print(a[0])
+print(a[1])
 fine = (max (a[-1], b[-1])) / 0.001
 
 
@@ -39,6 +40,8 @@ fine = (max (a[-1], b[-1])) / 0.001
 a += 0.0005 #serve per arrotondare
 a *= 1000
 a = np.int32(a)
+print(a[0])
+print(a[1])
 b += 0.0005 #serve per arrotondare
 b *= 1000
 b = np.int32(b)
@@ -46,14 +49,14 @@ b = np.int32(b)
 fine += 0.5 #serve a arrotondare
 fine = int(fine)
 
-t1_binned = hist3(a, fine)
-t2_binned = hist3(b, fine)
+t1_binned = hist3(a, 300000)
+t2_binned = hist3(b, 300000)
 
 xc = np.zeros(200)
 count = 0 
 
 for i in range(0,5):
-    for j in range(0, fine-i):
+    for j in range(0, 300000+1-i):
         xc[i] = xc[i] + t1_binned[j+i]*t2_binned[j]
     
 #xc = np.correlate(data[0], data[1])
