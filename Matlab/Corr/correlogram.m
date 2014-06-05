@@ -5,6 +5,7 @@ function correlogram(A,B)
 %The function will automatically save the correlogram in a .jpeg image in the working directory.
 %To plot an autocorrelogram, simply repeat the same filename in both input fields.
 
+data = dlmread('01.txt', ' ');
 
 a=csvread(A); %reading file
 a=a'; %Transpose because of the delimited(column) data
@@ -23,12 +24,18 @@ d=A(1:(length(A)-4)); %extracting filename
 e=B(1:(length(B)-4));
 
 fine=max(a(length(a),1),b(length(b),1));
-temp=0:0.001:fine; %creating a vector of the same size as the longest input vector
-
+temp=0:0.001:300; %creating a vector of the same size as the longest input vector
 
 maxlags= 200;
 t1_binned = histc(a(:,1), temp); %timestamps to binned
 t2_binned = histc(b(:,1), temp);
+
+t1_binnedBeta = data(1:300000); %timestamps to binned
+t2_binnedBeta = data(300001:600000);
+
+if t1_binned ~= t1_binned
+    print ('diversi')
+end
 
 %making sure the two files are the same size, otherwise the 
 if (size(t1_binned)~=size(t2_binned))

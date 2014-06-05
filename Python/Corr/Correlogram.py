@@ -11,17 +11,27 @@ def hist3(my_list, fine):
 path = os.getcwd()
 path = path + "/Documents/GitHub/HPPS_NN/"
 
-a = np.loadtxt(path + "/DatiReali/Rete_10/Modello_Nuovo/A.csv", dtype=np.float32,delimiter = ',')
-b = np.loadtxt(path + "/DatiReali/Rete_10/Modello_Nuovo/B.csv", dtype=np.float32,delimiter = ',')
+data= np.loadtxt(path + "01.txt", dtype=int)
 
-fine = (max (a[len(a) - 1], b[len(b) - 1])) / 0.0001
+a = np.loadtxt(path + "/DatiReali/Rete_10/Modello_Vecchio/A.csv", dtype=np.float32,delimiter = ',')
+b = np.loadtxt(path + "/DatiReali/Rete_10/Modello_Vecchio/B.csv", dtype=np.float32,delimiter = ',')
+
+#fine = (max (a[len(a) - 1], b[len(b) - 1])) / 0.0001
 
 
-t1_binned = np.histogram(a, range = (0,fine))
-t2_binned = np.histogram(b, range = (0,fine))
+#t1_binned = np.histogram(a)
+#t2_binned = np.histogram(b)
 
-for i in range (0, 1000):
-     print (t1_binned[i])
-     
-     
-#xc = np.correlate(t1_binned, t2_binned, mode = 'valid')
+#print(t1_binned[0])
+xc = np.zeros(200)
+count = 0 
+for i in range(-5,5):
+    print(i)
+    for j in range(0, len(data[0])):
+        if not (i+j >= 300000 or i+j < 0):
+            xc[count] = xc[count] + data[0][j]*data[1][j+i]
+    count = count + 1
+    
+#xc = np.correlate(data[0], data[1])
+print(data[0])
+print(xc)
