@@ -52,13 +52,17 @@ fine = int(fine)
 t1_binned = hist3(a, 300000)
 t2_binned = hist3(b, 300000)
 
-xc = np.zeros(200)
+xc = np.zeros(30000)
 count = 0 
+print(0)
+delta_tot = datetime.timedelta()
+time1= datetime.datetime.now()
+for i in range(0,200):
+    xc[i] = np.inner(t1_binned[i:-1],t2_binned[0:-i-1])
+time2= datetime.datetime.now()
+delta_tot = time2-time1
 
-for i in range(0,5):
-    for j in range(0, 300000+1-i):
-        xc[i] = xc[i] + t1_binned[j+i]*t2_binned[j]
-    
+print(delta_tot)
 #xc = np.correlate(data[0], data[1])
 print(xc[0:5])
 mySave_1D(t1_binned,"lucaculo")
