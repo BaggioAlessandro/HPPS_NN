@@ -20,7 +20,7 @@ index_max = max(d1_20,[],1);
 
 for i=1:numb_neurons
     for j=1:numb_neurons
-        if index_max(1,i,j) == d1_20(2,i,j) || d1_20(2,i,j) > index_max(1,i,j)*0.85
+        if d1_20(2,i,j) > index_max(1,i,j)*0.85
             edges(i,j) = 1;
         end
     end
@@ -41,7 +41,7 @@ for i=1:numb_neurons
         if edges(i,j) == 1
             for h = 1:numb_neurons
                 if h ~= i && edges(h,j) == 1 
-                    if (d1_20(2,h,j)/2) > d1_20(2,i,j) * (d1_20(1,h,h) / d1_20(1,i,i))
+                    if (d1_20(2,h,j)/2) > d1_20(2,i,j) * ((d1_20(1,h,h) / d1_20(1,i,i)/0.5))
                         count = count + 1;
                     end
                     tot = tot+1;
@@ -60,4 +60,4 @@ save edges
 
 t_edges = toc(startEdges)
 my_save3D('d1_100nMatlab', d1_100n, 100, numb_neurons, '%10.13f ');
-my_save2D('edgesMatlab', edges, numb_neurons, '%10.5f ');
+my_save2D('edgesMatlab', edges, numb_neurons, '%g ');
