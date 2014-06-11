@@ -21,15 +21,16 @@ delta_time_post = datetime.timedelta()
 time_start = datetime.datetime.now()
 path = os.getcwd()
 path = path + "/Documents/GitHub/HPPS_NN/"
-
+path2 = path + "Time_Python/Reali/V2/"
 time_load1 = datetime.datetime.now()
 
 data= np.loadtxt(path + "01.txt", dtype=int)
 
 time_load2 = datetime.datetime.now()
 delta_time_load = time_load2-time_load1
+with open(path2+"time_load.txt", "a") as file1:
+    file1.write(str(((delta_time_load.seconds.real*CONVERSION + delta_time_load.microseconds.real)/CONVERSION)) + "\n")
 
-path = path + "Time_Python/Reali/"
 delay= np.zeros ((N_NEURONS,N_NEURONS,N_CAMP), dtype=int)
 delay_n= np.zeros ((N_NEURONS,N_NEURONS,N_CAMP))
 
@@ -92,13 +93,14 @@ for i in range(0,N_NEURONS):
     
     time_it_fine = datetime.datetime.now()
     delta_it = time_it_fine - time_it_start
-    with open(path+"time_v2_iteration.txt", "a") as file1:
+    with open(path2+"time_v2_iteration.txt", "a") as file1:
         file1.write(str(((delta_it.seconds.real*CONVERSION + delta_it.microseconds.real)/CONVERSION)/N_NEURONS) + " n_1 = " + str(vi.size) + " i = " + str(i) + " j = " + str(j) + "\n")
         
-    print(i)
-sum = np.sum(delay, 2)
-
 time_post = datetime.datetime.now()            
+delta_tot = time_post - time_start
+with open(path2+"time_all.txt", "a") as file1:
+    file1.write(str(((delta_tot.seconds.real*CONVERSION + delta_tot.microseconds.real)/CONVERSION)) + "\n")
+
 for i in range(0,N_NEURONS):
     for j in range(0,N_NEURONS):
         delay_n[i][j] = [delay[i][j][p]/sum[i][j] for p in range(N_CAMP)]
@@ -118,7 +120,7 @@ conn_cum = np.zeros(N_NEURONS,N_NEURONS)
 conn_time= INF * np.ones(N_NEURONS,N_NEURONS)
 for i in range(0,N_NEURONS):
     for j in range(0,N_NEURONS):
-      q = np.where(d1_100n(i,j,:)>=threshold)
+      q = np.where(d1_100n[i,j,:]>=threshold)
       if q.sieze > 0:
         conn[i,j] = d1_100n[i,j, q[0]]
         conn_cum[i,j] = np.sum(d1_100n(i,j,q))

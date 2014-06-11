@@ -1,6 +1,6 @@
 function main
 numb_neurons = 10;
-numb_camp = 1200;
+numb_camp = 300000;
 f=10;
 threshold = 0.4;
 
@@ -8,26 +8,26 @@ threshold = 0.4;
 
 %tmp_dati = csvread('C:\Users\Luca\Documents\GitHub\HPPS_NN\DatiReali\A.txt');
 
-
+start_delay = tic;
 start_all = tic;
 start_input = tic;
 path = pwd;
-file_name = strcat(path,'\HPPS_inputData.txt')
+file_name = strcat(path,'\01.txt')
 f2 = fopen (file_name, 'r');
 s = fscanf(f2,'%g ',[numb_camp numb_neurons]);
 fclose(f2);
 
 t_input = toc(start_input)
-start_delay = tic;
-t_iteration_delay = zeros(numb_neurons, numb_neurons);
+
+%t_iteration_delay = zeros(numb_neurons, numb_neurons);
 delays=zeros(numb_camp,numb_neurons,numb_neurons); %crea una matrice di 0 3000*40*40
 for i=1:numb_neurons
     i
   for j=1:numb_neurons
-       j
-    t1 = tic;
+    %t1 = tic;
     qi=find(s(:,i)==1); %estrae i time degli spike di i
     qj=find(s(:,j)==1); %estrae i time degli spike di j
+    j
     for k=1:length(qi)
       q=qj-qi(k);   %differenza degli skipe di j con gli spike di i
       q2=q(find(q>=0)); %filtro q per prendere solo i maggiori
@@ -35,10 +35,11 @@ for i=1:numb_neurons
         h=histc(q2,0:numb_camp);
         delays(:,i,j)=delays(:,i,j)+reshape(h(1:numb_camp),numb_camp,1);
       end
-    t_iteration_delay(i,j) = toc(t1);
+    %t_iteration_delay(i,j) = toc(t1);
     end
   end
 end
+
 t_delay = toc(start_delay)
 
 start_normal = tic;
@@ -61,7 +62,7 @@ end
 t_compress = toc(start_compress)
 
 
-mean_iteration_time = mean (mean (t_iteration_delay))
+%mean_iteration_time = mean (mean (t_iteration_delay))
 %save fdelays01 fdelays fdelaysn m_fdelaysn m_fd1 fd1
 
 d1_100=d1(1:101,:,:);
@@ -131,7 +132,7 @@ saveTime('t_delay',t_delay,numb_neurons,numb_camp);
 saveTime('t_normal',t_normal,numb_neurons,numb_camp);
 saveTime('t_compress',t_compress,numb_neurons,numb_camp);
 saveTime('t_save',t_save,numb_neurons,numb_camp);
-saveTime('mean_iteration_time',mean_iteration_time,numb_neurons,numb_camp);
+%saveTime('mean_iteration_time',mean_iteration_time,numb_neurons,numb_camp);
 
 end
 
