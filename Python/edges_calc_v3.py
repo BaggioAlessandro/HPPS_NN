@@ -50,7 +50,7 @@ def edges_cal(n_file, tresh_peak, weight_diff_fire, n_neurons, n_delays):
                 if (count > 0):
                     edges[i,j] = 0;
                     
-    mySave2D(edges, "edges_delay_python")
+    mySave_2D(edges, "edges_delay_python")
                 
             
         
