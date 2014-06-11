@@ -107,7 +107,7 @@ for i in range(0,N_NEURONS):
         delta_it = datetime.timedelta()
         time_it_start = datetime.datetime.now()
         semaphore.acquire
-        thread_list.append (Thread(target = inner_cicle, args = (i,j,qi[0],semaphore )) )
+        thread_list.append (threading.Thread(target = inner_cicle, args = (i,j,qi[0],semaphore )) )
         thread_list[-1].start()
         
 
@@ -128,4 +128,6 @@ for i in range(0,N_NEURONS):
         delay_n[i][j] = [delay[i][j][p]/sum[i][j] for p in range(N_DELAYS)]
         
 mySave_3D(delay,'Hystogram')
+for i in range(0,N_NEURONS):
+    np.savetxt(path + "delay_line_"+str(i)+".txt" ,delay[i,:,:], fmt = '%01d')
     
