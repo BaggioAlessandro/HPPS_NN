@@ -122,4 +122,7 @@ def delayMatrics_v5(n_file, n_neurons,n_camp, n_delays, n_threads):
             delay_n[i][j] = [delay[i][j][p]/sum[i][j] for p in range(n_delays)]
             
     mySave_3D(delay,'Hystogram')
+    
+    for i in range(0,n_neurons):
+        np.savetxt(path + "delay_line_"+str(i)+".txt" ,delay[i,:,:], fmt = '%01d')
     return delay;
