@@ -86,7 +86,12 @@ def delayMatrics_v5(n_file, n_neurons,n_camp, n_delays, n_threads):
     path = path + "/Documents/GitHub/HPPS_NN/"    
     time_load1 = datetime.datetime.now()    
     print(path)    
-    data= np.loadtxt(path + n_file, dtype=int)    
+    
+    #data= np.loadtxt(path + n_file, dtype=int)    
+    data = np.empty((n_neurons,n_camp), dtype=int)
+    for i in range(0, n_neurons):
+        data[i] = np.loadtxt(path + "/" + n_file + "/"+str(i)+"_01.txt", dtype=int)
+    
     time_load2 = datetime.datetime.now()
     delta_time_load = time_load2-time_load1    
     delay= np.zeros ((n_neurons,n_neurons,n_delays), dtype=int)
@@ -99,7 +104,6 @@ def delayMatrics_v5(n_file, n_neurons,n_camp, n_delays, n_threads):
     
     if (n_threads > 1):
         num_compare_thread = int((n_neurons)/n_threads)
-        print(num_compare_thread)
         for n in range(num_compare_thread,n_neurons,num_compare_thread):
             if ((n + num_compare_thread) < n_neurons):
                 thread_list.append (Thread(target = inner_cicle, args = (n-num_compare_thread,0,n,n_neurons)))
