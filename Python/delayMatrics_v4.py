@@ -4,11 +4,11 @@ import numpy as np
 import os
 import threading
 
-N_NEURONS = 10
+N_NEURONS = 9
 
-N_CAMP = 1200
+N_CAMP = 3000000
 
-N_DELAYS = 100
+N_DELAYS = 1000
 
 CONVERSION = 1000000
 
@@ -27,13 +27,15 @@ time_start = datetime.datetime.now()
 path = os.getcwd()
 path = path + "/Documents/GitHub/HPPS_NN/"
 
+path2 = path + "Input/"
+
 semaphore = threading.Semaphore(N_NEURONS)
 
 time_load1 = datetime.datetime.now()
 
-print(path)
-
-data= np.loadtxt(path + "01.txt", dtype=int)
+data = np.empty((N_NEURONS, N_CAMP))
+for i in range(0, N_NEURONS):
+     data[i] = np.loadtxt(path2 + str(i) + "_01.txt", dtype=int)
 
 time_load2 = datetime.datetime.now()
 delta_time_load = time_load2-time_load1

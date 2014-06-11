@@ -6,16 +6,16 @@ RESOLUTION = 0.0001
 PRECISION = 0.00001
 N_NEURON = 10
 
-destination = "01_new_20.txt"
+destination = "01_new_10.txt"
 
 path = os.getcwd()
-path = path + "\\Documents\\GitHub\\HPPS_NN\\DatiReali\\Rete_20\\"
+path = path + "\\Documents\\GitHub\\HPPS_NN\\DatiReali\\Rete_10\\Modello_Nuovo\\"
 
 path2 = os.getcwd()
 path2 = path2 + "\\Documents\\GitHub\\HPPS_NN\\"
 
-nomi = ["A.csv","B.csv","C.csv","D.csv","E.csv","F.csv","G.csv","H.csv","I.csv","L.csv","M.csv","N.csv","O.csv","P.csv","Q.csv","S.csv"]
-
+nomi = ["A.csv","B.csv","C.csv","D.csv","E.csv","F.csv","G.csv","H.csv","I.csv"]
+poi=0
 for i in nomi:
     time_stamp = []
     with open(path + i, 'rt') as file1:
@@ -27,7 +27,8 @@ for i in nomi:
             time_stamp.append(float(string))
     
     print(len(time_stamp))
-    with open(path2 + destination, 'w') as file2:
+    i = i[0]
+    with open(path2 + str(poi) + "_01.txt", 'w') as file2:
         count = RESOLUTION
         j = 0
         k = 0
@@ -50,4 +51,5 @@ for i in nomi:
             
         if(k != len(time_stamp)):
             print("merda"+i+str(k))
-    
+    print(poi)
+    poi += 1
