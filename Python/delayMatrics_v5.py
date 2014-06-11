@@ -41,8 +41,8 @@ def delayMatrics_v5(n_file, n_neurons,n_camp, n_delays, n_threads):
         file = open(path+ fileName +".txt", "w")
         for i in range(0,n_neurons):
             for j in range(0,n_neurons):
-                file.write("coppia " + str(i+1) + " " + str(j+1) + "\n")
-                for k in range(0, 10):
+                #file.write("coppia " + str(i+1) + " " + str(j+1) + "\n")
+                for k in range(0, n_delays):
                     file.write(str(my_matrix[i][j][k]) + " ")
                 file.write("\n")  
         file.close
@@ -122,5 +122,4 @@ def delayMatrics_v5(n_file, n_neurons,n_camp, n_delays, n_threads):
             delay_n[i][j] = [delay[i][j][p]/sum[i][j] for p in range(n_delays)]
             
     mySave_3D(delay,'Hystogram')
-    
-    return delay
+    return delay;
