@@ -1,13 +1,22 @@
 import os
 import numpy as np
 
-def edges_cal(tresh_peak, weight_diff_fire, N_NEURONS):
+def mySave_2D (my_matrix,fileName):
+    file = open(path+ fileName +".txt", "w")
+    for i in range(0,N_NEURONS):
+        for j in range(0,N_NEURONS):
+            file.write(str(my_matrix[i][j]) + " ")
+        
+        file.write("\n")    
+    file.close
+
+def edges_cal(n_file, tresh_peak, weight_diff_fire, N_NEURONS):
     
     path = os.getcwd()
     path = path + "/Documents/GitHub/HPPS_NN/"
     delay = np.empty((N_NEURONS,N_NEURONS,N_DELAYS), dtype=int)
     for i in range(0, N_NEURONS):
-        delay[i] = np.loadtxt(path + "delay_line_"+str(i)+".txt", dtype=int)
+        delay[i] = np.loadtxt(n_file+str(i)+".txt", dtype=int)
     
     edges = np.zeros((N_NEURONS, N_NEURONS));
     
@@ -38,9 +47,10 @@ def edges_cal(tresh_peak, weight_diff_fire, N_NEURONS):
                         
                         tot = tot+1;
                     
-                
                 if (count > 0):
                     edges[i,j] = 0;
+                    
+    my_save2D(edges, "edges_delay_python")
                 
             
         
