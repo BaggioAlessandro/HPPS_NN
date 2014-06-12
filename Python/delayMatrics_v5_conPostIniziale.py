@@ -19,7 +19,7 @@ def mySave_2D (my_matrix,fileName, n_neurons):
         file.write("\n")    
     file.close
 
-def compress(n_neurons,n_camp,factor):
+def compress(n_neurons,n_camp, delay_n, factor):
     d1 = np.zeros ((n_neurons, n_neurons, np.floor(n_camp/factor)+1))
     for i in range(0, np.int64(np.floor(n_camp/factor))):   #check +1
         d1[:,:,i] = np.sum(delay_n[:,:,i*factor:(i+1)*factor], 2)
@@ -43,13 +43,15 @@ def postIniziale(n_file_input, factor, n_neurons, n_camp, treshold, n_file_outpu
         for j in range(0,n_neurons):
             delay_n[i,j] = delay[i,j]/sum[i,j]            
     
-    d1 = compress(n_neurons, n_camp, factor)
+    d1 = compress(n_neurons, n_camp, delay_n, factor)
+    mySave_3D(d1,  "C:/Users/Ale/Documents/GitHub/HPPS_NN/lucaCulo", n_neurons, 20)
     d1_100 = d1[:,:,0:100]
-    d1_100n = np.zeros((n_neurons,n_neurons,100))
+    d1_100n = np.zeros((n_neurons,n_neurons,d1_100.shape[2]))
     sum2 = np.sum(d1_100, 2)
     for i in range(0,n_neurons):
         for j in range(0,n_neurons):
             d1_100n[i,j] = d1_100[i,j]/np.sum(d1_100[i,j,:])
+    
     
     conn = np.zeros((n_neurons,n_neurons))
     conn_cum = np.zeros((n_neurons,n_neurons))
@@ -61,7 +63,7 @@ def postIniziale(n_file_input, factor, n_neurons, n_camp, treshold, n_file_outpu
             if q.size > 0:
                 conn[i,j] = d1_100n[i,j, q[0]]
                 conn_cum[i,j] = np.sum(d1_100n[i,j,q])
-                conn_time[i,j]=q[1]
+                conn_time[i,j]=q[0]
     
     np.fill_diagonal(conn, 0)
     np.fill_diagonal(conn_cum, 0)
@@ -73,4 +75,4 @@ def postIniziale(n_file_input, factor, n_neurons, n_camp, treshold, n_file_outpu
                 edges[i,j] = 1
         
     print(edges)
-    mySave_2D(edges, "C:/Users/Ale/Documents/GitHub/HPPS_NN/edges_delay_python", n_neurons)
+    mySave_2D(edges, "C:/Users/Ale/Documents/GitHub/HPPS_NN/edges_delay_python4", n_neurons)

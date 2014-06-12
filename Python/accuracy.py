@@ -3,8 +3,8 @@ import numpy as np
 path = os.getcwd()
 path = path + "/Documents/GitHub/HPPS_NN/"
 
-#edges = np.loadtxt(path + "DatiReali/Rete_20/edges_Real.txt", dtype=int)
-edges = np.loadtxt(path + "DatiReali/Rete_10/Modello_Nuovo/edges_Real.txt", dtype=int)
+edges = np.loadtxt(path + "DatiReali/Rete_20/edges_Real.txt", dtype=int)
+#edges = np.loadtxt(path + "DatiReali/Rete_10/Modello_Nuovo/edges_Real.txt", dtype=int)
 
 rif = np.loadtxt(path + "edges_delay_python.txt", dtype=int)
 
@@ -39,8 +39,20 @@ for i in range(0,edges.shape[0]):
             single_error.append('FN')
              
             error_list.append(single_error)
+
+Se=TP/(TP+FN)
+Sp=TN/(TN+FP)
+Acc=(TP+TN)/(TP+FP+FN+TN)
             
 print('TP = ' + str(TP) + ' | ' + 'FN = ' + str(FN))
 print('________|________\n')            
 print('FP = ' + str(FP) + ' | ' + 'TN = ' + str(TN))
+
+print("Se = " + str(Se))
+print("Sp = " + str(Sp))
+print("Acc = " + str(Acc))
+
 print(error_list)
+
+
+
