@@ -2,19 +2,19 @@ import csv
 import os
 
 CAMP = 300.0
-RESOLUTION = 0.0001
+RESOLUTION = 0.001
 PRECISION = 0.00001
 N_NEURON = 16
 
 destination = "01_new_10.txt"
 
 path = os.getcwd()
-path = path + "\\Documents\\GitHub\\HPPS_NN\\DatiReali\\Rete_10\\Modello_Nuovo\\"
+path = path + "\\Documents\\GitHub\\HPPS_NN\\DatiReali\\Rete_10\\Modello_Vecchio\\"
 
 path2 = os.getcwd()
-path2 = path2 + "\\Documents\\GitHub\\HPPS_NN\\Input\\10_new_model\\"
+path2 = path2 + "\\Documents\\GitHub\\HPPS_NN\\Input\\10_old_model\\"
 
-nomi = ["A.csv","B.csv","C.csv","D.csv","E.csv","F.csv","G.csv","H.csv","I.csv"]
+nomi = ["A.csv","B.csv","C.csv","D.csv","E.csv","F.csv","G.csv","H.csv","I.csv", "L.csv"]
 poi=0
 for i in nomi:
     time_stamp = []

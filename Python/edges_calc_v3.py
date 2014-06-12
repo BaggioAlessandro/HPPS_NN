@@ -10,19 +10,19 @@ def mySave_2D (my_matrix,fileName, n_neurons):
         file.write("\n")    
     file.close
 
-def edges_cal(n_file, tresh_peak, weight_diff_fire, n_neurons, n_delays):
+def edges_cal(n_file, factor, tresh_peak, weight_diff_fire, n_neurons, n_delays):
     
     path = os.getcwd()
     path = path + "/Documents/GitHub/HPPS_NN/"
-    delay = np.empty((n_neurons,n_neurons,n_delays), dtype=int)
+    delay = np.empty((n_neurons,n_neurons, np.floor(n_delays/factor)+1), dtype=int)
     for i in range(0, n_neurons):
         delay[i] = np.loadtxt(n_file+str(i)+".txt", dtype=int)
     
     edges = np.zeros((n_neurons, n_neurons));
     
-    d1_20 = delay[:,0:20,0:20]
+    d1_20 = delay[:,:,0:20]
 
-    max = np.argmax(d1_20,1);
+    max = np.argmax(d1_20,2);
     
     
     for i in range(0,n_neurons):
@@ -32,7 +32,7 @@ def edges_cal(n_file, tresh_peak, weight_diff_fire, n_neurons, n_delays):
             
     for i in range(0,n_neurons):
         for j in range(0,n_neurons):
-            if (max[i,j] == d1_20[0,i,j] ):
+            if (max[i,j] == 0):
                 edges[i,j] = 0;
             
     for i in range(0,n_neurons):
@@ -42,14 +42,14 @@ def edges_cal(n_file, tresh_peak, weight_diff_fire, n_neurons, n_delays):
             if (edges[i,j] == 1):
                 for h in range(0,n_neurons):
                     if (h != i and edges[h,j] == 1 ):
-                        if ((d1_20[max[i,j],h,j]/2) > d1_20[max[i,j],i,j] * (d1_20[0,h,h] / d1_20[0,i,i]/weight_diff_fire)):  #weight_diff_fire = 0.5
+                        if ((d1_20[h,j,max[h,j]]/2) > d1_20[i,j,max[i,j]] * (d1_20[h,h,0] / d1_20[i,i,0]/weight_diff_fire)):  #weight_diff_fire = 0.5
                             count = count + 1;
                         
                         tot = tot+1;
                     
                 if (count > 0):
                     edges[i,j] = 0;
-                    
+    print(edges)
     mySave_2D(edges, "C:/Users/Ale/Documents/GitHub/HPPS_NN/edges_delay_python", n_neurons)
                 
             

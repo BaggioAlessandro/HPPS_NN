@@ -10,7 +10,7 @@ def mySave_3D (my_matrix,fileName, n_neurons, n_delays):
                 file.write("\n")  
         file.close
     
-def compress(n_file_input, factor, n_neurons, n_delays, n_file_output):
+def compress(n_file_input, factor, n_neurons, n_delays, do_media, n_file_output):
     delay = np.empty((n_neurons,n_neurons,n_delays), dtype=int)
     for i in range(0, n_neurons):
         delay[i] = np.loadtxt(n_file_input+str(i)+".txt", dtype=int)
@@ -23,7 +23,19 @@ def compress(n_file_input, factor, n_neurons, n_delays, n_file_output):
         i = i+1
         d1[:,:,i]= np.sum(delay[:,:,(i)*f:], 2)
         
+    if(do_media):
+        for i in range(0,n_neurons):
+            for j in range(0,n_neurons):
+                d1[i,j] -= np.int64(np.mean(d1[i,j,1:200]))
+        
+        for i in range(0,n_neurons):
+            for j in range(0,n_neurons):
+                for h in range (0,d1.shape[2]):
+                    if (d1[i,j,h] < 0):
+                        d1[i,j,h] = 0        
     for i in range(0,n_neurons):
         np.savetxt(n_file_output+str(i)+".txt" ,d1[i,:,:], fmt = '%01d')
     
-    mySave_3D(d1, n_file_output + "tot", n_neurons, n_delays)
+                
+    
+    mySave_3D(d1[:,:,0:20], n_file_output + "tot", n_neurons, n_delays)
