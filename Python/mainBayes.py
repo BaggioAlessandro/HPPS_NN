@@ -1,0 +1,1 @@
+bayesian("Input/10_new_model",9,3000000)

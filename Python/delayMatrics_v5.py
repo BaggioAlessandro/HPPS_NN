@@ -15,38 +15,7 @@ def delayMatrics_v5(n_file, n_neurons,n_camp, n_delays, n_threads, output_folder
         hist = np.zeros((1,n_delays), dtype=int)
         hist[0][my_list[:]] += 1
         return hist
-        
-    def compress():
-        d1 = np.zeros ((n_neurons, n_neurons, np.floor(n_camp/factor)+1))
-        for i in range(0, np.int64(np.floor(n_camp/factor))):   #check +1
-            d1[:,:,i] = np.sum(delay_n[:,:,i*factor:(i+1)*factor], 2)
-        
-        if(n_camp%factor != 0): 
-            i = i+1
-            d1[:,:,i]= np.sum(delay_n[:,:,(i)*f:], 2)
-        
-        return d1
-        
-    def mySave_3D (my_matrix,fileName):
-        file = open(path+ fileName +".txt", "w")
-        for i in range(0,n_neurons):
-            for j in range(0,n_neurons):
-                #file.write("coppia " + str(i+1) + " " + str(j+1) + "\n")
-                for k in range(0, n_delays):
-                    file.write(str(my_matrix[i][j][k]) + " ")
-                file.write("\n")  
-        file.close
-        
-    
-    def mySave_2D (my_matrix,fileName):
-        file = open(path+ fileName +".txt", "w")
-        for i in range(0,n_neurons):
-            for j in range(0,n_neurons):
-                file.write(str(my_matrix[i][j]) + " ")
-            
-            file.write("\n")    
-        file.close
-        
+
     def inner_cicle(index1,index2,index1Final,index2Final):
         for i in range (index1, index1Final):
             qi = np.where(data[i][:] > 0)
@@ -116,9 +85,7 @@ def delayMatrics_v5(n_file, n_neurons,n_camp, n_delays, n_threads, output_folder
         for j in range(0,n_neurons):
             delay_n[i][j] = [delay[i][j][p]/sum[i][j] for p in range(n_delays)]
             
-    mySave_3D(delay,'Hystogram')
     
-
     for i in range(0,n_neurons):
         np.savetxt(path + "Delay_temp/" + output_folder_name +"/delay_line_"+str(i)+".txt" ,delay[i,:,:], fmt = '%01d')
     return delay;
