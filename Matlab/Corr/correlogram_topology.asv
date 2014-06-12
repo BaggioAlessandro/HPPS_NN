@@ -105,5 +105,5 @@ for i=1:N_NEURONS
         end
     end
 end
-my_save2D('edges_matlab', edges_ecc, N_NEURONS, '%g ');
+my_save2D('edges_matlab', edges_ecc, n_neur, typef)
 disp('lucaculo');
