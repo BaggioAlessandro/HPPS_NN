@@ -143,7 +143,10 @@ np.fill_diagonal(conn, 0)
 np.fill_diagonal(conn_cum, 0)
   
 edges = conn_cum
-        
+for i in range(0,N_NEURONS):
+    for j in range(0,N_NEURONS):
+        if(edges[i,j] > 0):
+            edges[i,j] = 1
         
 time_fine = datetime.datetime.now()
 delta_tot = time_fine - time_start

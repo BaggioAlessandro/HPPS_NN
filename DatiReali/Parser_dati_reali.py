@@ -9,10 +9,10 @@ N_NEURON = 16
 destination = "01_new_10.txt"
 
 path = os.getcwd()
-path = path + "\\Documents\\GitHub\\HPPS_NN\\DatiReali\\Rete_10\\Modello_Vecchio\\"
+#path = path + "\\Documents\\GitHub\\HPPS_NN\\DatiReali\\Rete_10\\Modello_Vecchio\\"
 
 path2 = os.getcwd()
-path2 = path2 + "\\Documents\\GitHub\\HPPS_NN\\Input\\10_old_model\\"
+#path2 = path2 + "\\Documents\\GitHub\\HPPS_NN\\Input\\10_old_model\\"
 
 nomi = ["A.csv","B.csv","C.csv","D.csv","E.csv","F.csv","G.csv","H.csv","I.csv", "L.csv"]
 poi=0
