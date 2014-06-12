@@ -26,7 +26,7 @@ def compress(n_file_input, factor, n_neurons, n_delays, do_media, n_file_output)
     if(do_media):
         for i in range(0,n_neurons):
             for j in range(0,n_neurons):
-                d1[i,j] -= np.int64(np.mean(d1[i,j,1:200]))
+                d1[i,j,1:-1] -= np.int64(np.mean(d1[i,j,1:200]))
         
         for i in range(0,n_neurons):
             for j in range(0,n_neurons):

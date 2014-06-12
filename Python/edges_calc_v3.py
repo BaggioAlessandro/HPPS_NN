@@ -27,7 +27,7 @@ def edges_cal(n_file, factor, tresh_peak, weight_diff_fire, n_neurons, n_delays)
     
     for i in range(0,n_neurons):
         for j in range(0,n_neurons):
-            if (max[i][j] < 10): #tresh_peak=0.85
+            if (max[i][j] < 10 and d1_20[i,j, max[i,j] >] d1_20[j,j,0]/40): #tresh_peak=0.85
                 edges[i,j] = 1;
             
     for i in range(0,n_neurons):
@@ -42,7 +42,7 @@ def edges_cal(n_file, factor, tresh_peak, weight_diff_fire, n_neurons, n_delays)
             if (edges[i,j] == 1):
                 for h in range(0,n_neurons):
                     if (h != i and edges[h,j] == 1 ):
-                        if ((d1_20[h,j,max[h,j]]/2) > d1_20[i,j,max[i,j]] * np.sqrt(d1_20[h,h,0] / d1_20[i,i,0])):  #weight_diff_fire = 0.5
+                        if ((d1_20[h,j,max[h,j]]/2) > d1_20[i,j,max[i,j]] * ((d1_20[h,h,0] / d1_20[i,i,0])**(1/1.5))):  #weight_diff_fire = 0.5
                             count = count + 1;
                         
                         tot = tot+1;
