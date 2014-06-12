@@ -1,20 +1,10 @@
-def delayMatrics_v5(n_file, n_neurons,n_camp, n_delays, n_threads):
+def delayMatrics_v5(n_file, n_neurons,n_camp, n_delays, n_threads, output_folder_name):
     import random
     import datetime
     import numpy as np
     import os
     import threading
     from threading import Thread
-    
-   # n_neurons = 10
-    
-    #n_camp = 300000
-
-    #n_delays = 100
-    
-   # factor = 10
-    
-   # TRESHOLD = 0.016
     
     ##Functions
     def my_subctract_v3(my_list, item):
@@ -90,6 +80,7 @@ def delayMatrics_v5(n_file, n_neurons,n_camp, n_delays, n_threads):
     #data= np.loadtxt(path + n_file, dtype=int)    
     data = np.empty((n_neurons,n_camp), dtype=int)
     for i in range(0, n_neurons):
+        print(path + "/" + n_file + "/"+str(i)+"_01.txt")
         data[i] = np.loadtxt(path + "/" + n_file + "/"+str(i)+"_01.txt", dtype=int)
     
     time_load2 = datetime.datetime.now()
@@ -129,5 +120,5 @@ def delayMatrics_v5(n_file, n_neurons,n_camp, n_delays, n_threads):
     
 
     for i in range(0,n_neurons):
-        np.savetxt(path + "Delay_temp/Not_Compress/delay_line_"+str(i)+".txt" ,delay[i,:,:], fmt = '%01d')
+        np.savetxt(path + "Delay_temp/" + output_folder_name +"/delay_line_"+str(i)+".txt" ,delay[i,:,:], fmt = '%01d')
     return delay;
