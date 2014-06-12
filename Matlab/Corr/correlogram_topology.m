@@ -1,4 +1,6 @@
 function correlogram_topology()
+import my_save2D
+import my_save3D
 %The function allows the plotting of a correlogram between two vectors, whose elements are contained in .txt or .csv files, used as input. To use this function, please digit:
 %correlogram('nameFile1','nameFile2');
 %where the input are two filenames contained in the workig directory. Please make sure the formatting of the files are numbers separated by "," and the decimal mark is "."
@@ -12,9 +14,10 @@ data = zeros(N_NEURONS,N_CAMP);
 for i=0:(N_NEURONS-1)
     data(i+1,:) = dlmread(strcat(strcat('Input\10_new_model\',int2str(i)),'_01.txt'), ' ');
 end
-
 edges_ecc = zeros(N_NEURONS, N_NEURONS);
 edges_ini = zeros(N_NEURONS, N_NEURONS);
+my_save2D('edges_matlab', edges_ecc, N_NEURONS, '%g ');
+
 xx=-30:30;
 for i=1:N_NEURONS
     t1_binned = data(((i-1)*N_CAMP)+1:(i*N_CAMP));
