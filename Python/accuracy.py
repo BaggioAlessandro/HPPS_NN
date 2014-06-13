@@ -4,9 +4,9 @@ path = os.getcwd()
 path = path + "/Documents/GitHub/HPPS_NN/"
 
 #edges = np.loadtxt(path + "DatiReali/Rete_20/edges_Real.txt", dtype=int)
-edges = np.loadtxt(path + "DatiReali/Rete_10/Modello_Nuovo/edges_Real.txt", dtype=int)
+edges = np.loadtxt(path + "DatiReali/Rete_10/Modello_Vecchio/edges_Real.txt", dtype=int)
 
-rif = np.loadtxt(path + "edges_matlab.txt", dtype=int)
+rif = np.loadtxt(path + "edges_delay_python.txt", dtype=int)
 
 TP = 0
 TN = 0

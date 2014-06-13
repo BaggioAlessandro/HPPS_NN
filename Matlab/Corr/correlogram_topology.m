@@ -7,13 +7,13 @@ import my_save3D
 %The function will automatically save the correlogram in a .jpeg image in the working directory.
 %To plot an autocorrelogram, simply repeat the same filename in both input fields.
 
-N_NEURONS = 9;
+N_NEURONS = 16;
 N_CAMP = 3000000;
 MAX_LAGS = 2000;
 f=10;
 data = zeros(N_NEURONS,N_CAMP);
 for i=0:(N_NEURONS-1)
-    data(i+1,:) = dlmread(strcat(strcat('Input\10_new_model\',int2str(i)),'_01.txt'), ' ');
+    data(i+1,:) = dlmread(strcat(strcat('Input\20_new_model\',int2str(i)),'_01.txt'), ' ');
 end
 edges_ecc = zeros(N_NEURONS, N_NEURONS);
 edges_ini = zeros(N_NEURONS, N_NEURONS);
