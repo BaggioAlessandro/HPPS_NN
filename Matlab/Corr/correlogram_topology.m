@@ -118,6 +118,6 @@ for i=1:N_NEURONS
         end
     end
 end
-edges_ecc
+edges_ecc;
 edges_ecc = edges_ecc - diag(diag(edges_ecc));
 my_save2D('edges_matlab', edges_ecc, N_NEURONS, '%g ');
