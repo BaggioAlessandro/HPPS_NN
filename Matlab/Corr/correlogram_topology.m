@@ -28,12 +28,12 @@ for i=1:N_NEURONS
 
         xc = xcorr(t2_binned, t1_binned,MAX_LAGS); % actual crosscorrelation
         d1=zeros(floor(length(xc)./f)+1,1);
-        for i=1:floor(length(xc)./f)
-          d1(i)=sum(xc(((i-1)*f)+1:i*f));  %1 indica che la somma è fatta lungo la prima dimensione
+        for v=1:floor(length(xc)./f)
+          d1(v)=sum(xc(((v-1)*f)+1:v*f));  %1 indica che la somma è fatta lungo la prima dimensione
         end
-        if i<length(xc)./f %gestisce la posizione 501
-          i=i+1;
-          d1(i)=sum(xc((i-1)*f+1:end));
+        if v<length(xc)./f %gestisce la posizione 501
+          v=v+1;
+          d1(v)=sum(xc((v-1)*f+1:end));
         end
         d1 = d1';
         d1(MAX_LAGS/f+1)=0;
