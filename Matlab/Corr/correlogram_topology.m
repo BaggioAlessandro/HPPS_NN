@@ -23,7 +23,6 @@ xx=-30:30;
 for i=1:N_NEURONS
     t1_binned = data(i,:);
     for j=1:N_NEURONS
-        tic;
         t2_binned = data(j,:);
        
 
@@ -36,7 +35,6 @@ for i=1:N_NEURONS
           i=i+1;
           d1(i)=sum(xc((i-1)*f+1:end));
         end
-        toc
         d1(MAX_LAGS/f+1)=0;
         %prendi l'intorno dello 0
         xcb=d1(MAX_LAGS-29:MAX_LAGS+31);
