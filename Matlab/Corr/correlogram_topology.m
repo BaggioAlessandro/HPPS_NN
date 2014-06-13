@@ -7,12 +7,13 @@ import my_save3D
 %The function will automatically save the correlogram in a .jpeg image in the working directory.
 %To plot an autocorrelogram, simply repeat the same filename in both input fields.
 
-N_NEURONS = 10;
-N_CAMP = 300000;
-MAX_LAGS = 200;
+N_NEURONS = 9;
+N_CAMP = 3000000;
+MAX_LAGS = 2000;
+f=10;
 data = zeros(N_NEURONS,N_CAMP);
 for i=0:(N_NEURONS-1)
-    data(i+1,:) = dlmread(strcat(strcat('Input\10_old_model\',int2str(i)),'_01.txt'), ' ');
+    data(i+1,:) = dlmread(strcat(strcat('Input\10_new_model\',int2str(i)),'_01.txt'), ' ');
 end
 edges_ecc = zeros(N_NEURONS, N_NEURONS);
 edges_ini = zeros(N_NEURONS, N_NEURONS);
@@ -27,14 +28,22 @@ for i=1:N_NEURONS
        
 
         xc = xcorr(t2_binned, t1_binned,MAX_LAGS); % actual crosscorrelation
+        d1=zeros(floor(length(xc)./f)+1);
+        for i=1:floor(length(xc)./f)
+          d1(i)=sum(xc(((i-1)*f)+1:i*f));  %1 indica che la somma è fatta lungo la prima dimensione
+        end
+        if i<length(xc)./f %gestisce la posizione 501
+          i=i+1;
+          d1(i)=sum(xc((i-1)*f+1:end));
+        end
         toc
-        xc(MAX_LAGS+1)=0;
+        d1(MAX_LAGS/f+1)=0;
         %prendi l'intorno dello 0
-        xcb=xc(MAX_LAGS-29:MAX_LAGS+31);
+        xcb=d1(MAX_LAGS-29:MAX_LAGS+31);
         %calculating mean and standard deviation
         n = 2*MAX_LAGS;
-        mean = sum(xc)/n; 
-        stdev = sqrt(sum((xc - mean).^2)/n);
+        mean = sum(d1(:),1)/n; 
+        stdev = sqrt(sum((d1 - mean).^2)/n);
 
         flag1=0;flag2=0;massimo1=0;massimo2=0;
 

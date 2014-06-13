@@ -1,13 +1,15 @@
-function corrbarre(A,B)
+function corrbarre()
 %The function allows the plotting of a correlogram between two vectors, whose elements are contained in .txt or .csv files, used as input. To use this function, please digit:
 %correlogram('nameFile1','nameFile2');
 %where the input are two filenames contained in the workig directory. Please make sure the formatting of the files are numbers separated by "," and the decimal mark is "."
 %The function will automatically save the correlogram in a .jpeg image in the working directory.
 %To plot an autocorrelogram, simply repeat the same filename in both input fields.
+path = pwd;
+file_name1 = strcat(path,'\DatiReali\Rete_10\Modello_Nuovo\' , 'A.csv');
+file_name2 = strcat(path,'\DatiReali\Rete_10\Modello_Nuovo\','D.csv');
 
-
-a=csvread(A); 
-b=csvread(B);
+a=csvread(file_name1); 
+b=csvread(file_name2);
 
 if(size(a,1)==1)
     a=a';
@@ -17,11 +19,11 @@ if(size(b,1)==1)
     b=b';
 end
     
-d=A(1:(length(A)-4)); %extracting filename
-e=B(1:(length(B)-4));
+d=file_name1(1:(length(file_name1)-4)); %extracting filename
+e=file_name2(1:(length(file_name2)-4));
 
 fine=max(a(length(a),1),b(length(b),1));
-temp=0:0.0005:fine; %creating a vector of the same size as the longest input vector
+temp=0:0.0001:fine; %creating a vector of the same size as the longest input vector
 
 
 maxlags= 200;
@@ -54,10 +56,6 @@ n=figure;
 plot(xx,xcb);
 
 bar(abs(xc));
-
-%saving the jpeg file
-filename=[d e];
-print(n,'-djpeg',filename);
 
 
 %Automatic recognition of peaks and troughs
