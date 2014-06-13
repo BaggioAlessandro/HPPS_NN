@@ -7,12 +7,12 @@ import my_save3D
 %The function will automatically save the correlogram in a .jpeg image in the working directory.
 %To plot an autocorrelogram, simply repeat the same filename in both input fields.
 
-N_NEURONS = 9;
-N_CAMP = 3000000;
+N_NEURONS = 10;
+N_CAMP = 300000;
 MAX_LAGS = 200;
 data = zeros(N_NEURONS,N_CAMP);
 for i=0:(N_NEURONS-1)
-    data(i+1,:) = dlmread(strcat(strcat('Input\10_new_model\',int2str(i)),'_01.txt'), ' ');
+    data(i+1,:) = dlmread(strcat(strcat('Input\10_old_model\',int2str(i)),'_01.txt'), ' ');
 end
 edges_ecc = zeros(N_NEURONS, N_NEURONS);
 edges_ini = zeros(N_NEURONS, N_NEURONS);
@@ -20,10 +20,10 @@ my_save2D('edges_matlab', edges_ecc, N_NEURONS, '%g ');
 
 xx=-30:30;
 for i=1:N_NEURONS
-    t1_binned = data(((i-1)*N_CAMP)+1:(i*N_CAMP));
+    t1_binned = data(i,:);
     for j=1:N_NEURONS
         tic;
-        t2_binned = data(((j-1)*N_CAMP)+1:(j*N_CAMP));
+        t2_binned = data(j,:);
        
 
         xc = xcorr(t2_binned, t1_binned,MAX_LAGS); % actual crosscorrelation
@@ -46,6 +46,7 @@ for i=1:N_NEURONS
         end
         if(flag1 ~= 0)
             edges_ecc(i,j) = 1;
+            disp('conn');
         end
         %Same for negative time shifts
         for h=25:30
@@ -56,6 +57,7 @@ for i=1:N_NEURONS
         end
         if(flag2 ~= 0)
             edges_ecc(j,i) = 1;
+            disp('conn');
         end
         
         
@@ -108,5 +110,5 @@ for i=1:N_NEURONS
         end
     end
 end
+edges_ecc = edges_ecc - diag(diag(edges_ecc));
 my_save2D('edges_matlab', edges_ecc, N_NEURONS, '%g ');
-disp('lucaculo');
